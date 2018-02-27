@@ -73,7 +73,7 @@
     <LibraryPath>D:\ForgottenServer\Peacemaker\libs\glfw-3.2.1.bin.WIN64\lib-vc2015;D:\ForgottenServer\Peacemaker\libs\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\libs\glm\glm\;$(SolutionDir)\libs\glfw.3.2.1\build\native\include\GLFW;$(SolutionDir)\libs\glew-2.1.0\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\libs\glm\glm\;$(SolutionDir)\libs\glfw-3.2.1\include;$(SolutionDir)\libs\glew-2.1.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\libs\glew-2.1.0\lib\Release\x64;$(SolutionDir)\libs\glfw-3.2.1.bin.WIN64\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
