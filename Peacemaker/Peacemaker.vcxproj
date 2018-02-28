@@ -128,12 +128,16 @@
     <ClCompile Include="BMPLoader.cpp" />
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="driver.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="vboindexer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="BMPLoader.h" />
     <ClInclude Include="controller.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />

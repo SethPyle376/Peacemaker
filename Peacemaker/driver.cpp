@@ -1,16 +1,16 @@
+#pragma once
 #include <GL\glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include <vector>
-#include <glm.hpp>
+#include "Object.h"
 #include <gtc\matrix_transform.hpp>
 #include "controller.h"
 
-#include "Tester.h"
 #include "ShaderManager.h"
 #include "BMPLoader.h"
-#include "OBJLoader.h"
-#include "vboindexer.h"
+
+
+
 
 using namespace std;
 
@@ -54,10 +54,10 @@ int main()
 	ShaderManager *shaderManager = new ShaderManager();
 
 
-	GLuint vao;
+	/*GLuint vao;
 	GLuint vbo;
 
-	GLuint uvo;
+	GLuint uvo;*/
 
 	width = 1024;
 	height = 768;
@@ -70,7 +70,6 @@ int main()
 		cout << "ERROR OPENING WINDOW" << endl;
 	}
 
-	Tester *tester = new Tester();
 	glfwMakeContextCurrent(window);
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -84,7 +83,7 @@ int main()
 	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	std::vector<glm::vec3> vertices;
+	/*std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
 	bool res = loadObj("test.obj", vertices, uvs, normals);
@@ -94,14 +93,17 @@ int main()
 	std::vector<glm::vec2> indexed_uvs;
 	std::vector<glm::vec3> indexed_normals;
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
+	*/
+
+	Object *monkey = new Object("test.obj");
 
 	GLuint programID = shaderManager->LoadShaders("vertex.glsl", "fragment.glsl");
 
-	std::cout << "VERTEX COUNT: " << vertices.size() << std::endl;
-	std::cout << "PACKED VERTEX COUNT: " << indexed_vertices.size() << std::endl;
+	/*std::cout << "VERTEX COUNT: " << vertices.size() << std::endl;
+	std::cout << "PACKED VERTEX COUNT: " << indexed_vertices.size() << std::endl;*/
 
 
-	glGenVertexArrays(1, &vao);
+	/*glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 	glGenBuffers(1, &vbo);
@@ -121,7 +123,7 @@ int main()
 	GLuint elementbuffer;
 	glGenBuffers(1, &elementbuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);*/
 
 	renderer = glGetString(GL_RENDERER);
 	version = glGetString(GL_VERSION);
@@ -160,6 +162,8 @@ int main()
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glUniform1i(textureID, 0);
+
+		/*
 
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -206,7 +210,8 @@ int main()
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
-
+		*/
+		monkey->render();
 
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		{

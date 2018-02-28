@@ -22,7 +22,7 @@ public:
 	void loadFloat(int location, float value);
 	void loadInt(int location, int value);
 	void loadVector(int location, glm::vec3 value);
-	void load2DVector(int location, glm::vec2 value);
+	void loadVec2(int location, glm::vec2 value);
 	void loadMatrix(int location, glm::mat4 value);
 
 
