@@ -87,7 +87,7 @@ int main()
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
-	bool res = loadObj("C:/ForgottenServer/Peacemaker/x64/Debug/test.obj", vertices, uvs, normals);
+	bool res = loadObj("test.obj", vertices, uvs, normals);
 
 	std::vector<unsigned short> indices;
 	std::vector<glm::vec3> indexed_vertices;
@@ -95,7 +95,7 @@ int main()
 	std::vector<glm::vec3> indexed_normals;
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
-	GLuint programID = shaderManager->LoadShaders("C:/ForgottenServer/Peacemaker/x64/Debug/vertex.glsl", "C:/ForgottenServer/Peacemaker/x64/Debug/fragment.glsl");
+	GLuint programID = shaderManager->LoadShaders("vertex.glsl", "fragment.glsl");
 
 	std::cout << "VERTEX COUNT: " << vertices.size() << std::endl;
 	std::cout << "PACKED VERTEX COUNT: " << indexed_vertices.size() << std::endl;
@@ -130,7 +130,7 @@ int main()
 	GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
 	GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
 
-	GLuint texture = loadDDS("C:/ForgottenServer/Peacemaker/x64/Debug/uvmap.dds");
+	GLuint texture = loadDDS("uvmap.dds");
 	GLuint textureID = glGetUniformLocation(programID, "myTextureSampler");
 
 	glEnable(GL_DEPTH_TEST);
