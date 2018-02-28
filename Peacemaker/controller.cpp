@@ -32,7 +32,7 @@ float mouseSpeed = 0.005f;
 
 
 
-void computeMatricesFromInputs(GLFWwindow* window) {
+float computeMatricesFromInputs(GLFWwindow* window) {
 
 	// glfwGetTime is called only once, the first time this function is called
 	static double lastTime = glfwGetTime();
@@ -99,4 +99,5 @@ void computeMatricesFromInputs(GLFWwindow* window) {
 
 	// For the next frame, the "last time" will be "now"
 	lastTime = currentTime;
+	return deltaTime;
 }

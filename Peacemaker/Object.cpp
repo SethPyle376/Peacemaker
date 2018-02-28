@@ -30,9 +30,6 @@ Object::Object(std::string fileLocation)
 	glGenBuffers(1, &elementBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
-
-
-
 }
 
 void Object::render()
@@ -82,4 +79,22 @@ void Object::render()
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
+}
+
+void Object::translate(glm::vec3 movement)
+{
+	for (int x = 0; x < indexed_vertices.size(); x++)
+	{
+		indexed_vertices[x] += movement;
+	}
+
+	GLuint *oldBuffer = new GLuint[1];
+	oldBuffer[0] = vbo;
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec3), &indexed_vertices[0], GL_STATIC_DRAW);
+
+	glDeleteBuffers(1, oldBuffer);
+
 }
