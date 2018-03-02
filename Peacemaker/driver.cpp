@@ -7,7 +7,7 @@
 #include "controller.h"
 
 #include "ShaderManager.h"
-#include "BMPLoader.h"
+
 
 
 //Savannah was here
@@ -42,8 +42,8 @@ int main()
 
 	ShaderManager *shaderManager = new ShaderManager();
 
-	width = 1024;
-	height = 768;
+	width = 1920;
+	height = 1080;
 	
 	glfwInit();
 	window = glfwCreateWindow(width, height, "TEST", NULL, NULL);
@@ -58,6 +58,7 @@ int main()
 	glewInit();
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
 	// Hide the mouse and enable unlimited mouvement
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -66,12 +67,10 @@ int main()
 	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-
-	monkey = new Object("test.obj");
-	monkeyTwo = new Object("test.obj");
-
 	GLuint programID = shaderManager->LoadShaders("vertex.glsl", "fragment.glsl");
 
+	monkey = new Object("test.obj", "uvmap.dds", programID);
+	monkeyTwo = new Object("test.obj", "uvmap.dds", programID);
 
 	renderer = glGetString(GL_RENDERER);
 	version = glGetString(GL_VERSION);
@@ -79,9 +78,6 @@ int main()
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
 	GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
 	GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
-
-	GLuint texture = loadDDS("uvmap.dds");
-	GLuint textureID = glGetUniformLocation(programID, "myTextureSampler");
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
@@ -108,8 +104,8 @@ int main()
 		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glUniform1i(textureID, 0);
+		glBindTexture(GL_TEXTURE_2D, monkey->getTexture());
+		glUniform1i(monkey->getTextureID(), 0);
 
 		monkey->render();
 		monkeyTwo->render();

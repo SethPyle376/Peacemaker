@@ -1,13 +1,13 @@
 #include "Object.h"
 
 
-Object::Object(std::string fileLocation)
+Object::Object(std::string objectLocation, std::string textureLocation, GLuint programID)
 {
-	bool res = loadObj(fileLocation.c_str(), vertices, uvs, normals);
+	bool res = loadObj(objectLocation.c_str(), vertices, uvs, normals);
 
 	if (!res)
 	{
-		std::cout << "ERROR LOADING OBJECT AT: " << fileLocation << std::endl;
+		std::cout << "ERROR LOADING OBJECT AT: " << objectLocation << std::endl;
 	}
 
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
@@ -30,6 +30,10 @@ Object::Object(std::string fileLocation)
 	glGenBuffers(1, &elementBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
+
+	texture = loadDDS(textureLocation.c_str());
+	textureID = glGetUniformLocation(programID, "myTextureSampler");
+
 }
 
 void Object::render()
@@ -97,4 +101,14 @@ void Object::translate(glm::vec3 movement)
 
 	glDeleteBuffers(1, oldBuffer);
 
+}
+
+GLuint Object::getTexture()
+{
+	return texture;
+}
+
+GLuint Object::getTextureID()
+{
+	return textureID;
 }
