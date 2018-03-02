@@ -34,10 +34,16 @@ Object::Object(std::string objectLocation, std::string textureLocation, GLuint p
 	texture = loadDDS(textureLocation.c_str());
 	textureID = glGetUniformLocation(programID, "myTextureSampler");
 
+
+
 }
 
 void Object::render()
 {
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glUniform1i(textureID, 0);
+
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glVertexAttribPointer(

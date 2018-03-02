@@ -69,7 +69,7 @@ int main()
 
 	GLuint programID = shaderManager->LoadShaders("vertex.glsl", "fragment.glsl");
 
-	monkey = new Object("test.obj", "uvmap.dds", programID);
+	monkey = new Object("LowPolyTree.obj", "uvmap.dds", programID);
 	monkeyTwo = new Object("test.obj", "uvmap.dds", programID);
 
 	renderer = glGetString(GL_RENDERER);
