@@ -6,7 +6,7 @@
 #include <gtc\matrix_transform.hpp>
 #include "controller.h"
 
-#include "ShaderManager.h"
+#include "ShaderProgram.h"
 
 
 
@@ -40,13 +40,13 @@ int main()
 	const GLubyte *renderer;
 	const GLubyte *version;
 
-	ShaderManager *shaderManager = new ShaderManager();
-
 	width = 1920;
 	height = 1080;
 	
 	glfwInit();
 	window = glfwCreateWindow(width, height, "TEST", NULL, NULL);
+
+	glm::vec3 lightPos = glm::vec3(4, 4, 4);
 
 	if (!window)
 	{
@@ -67,54 +67,61 @@ int main()
 	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	GLuint programID = shaderManager->LoadShaders("vertex.glsl", "fragment.glsl");
+	//GLuint programID = shaderManager->LoadShaders("vertex.glsl", "fragment.glsl");
 
-	monkey = new Object("LowPolyTree.obj", "uvmap.dds", programID);
-	monkeyTwo = new Object("test.obj", "uvmap.dds", programID);
+	ShaderProgram *shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
 
+	//Load two objects, encapsulate into scene class later
+	monkey = new Object("LowPolyTree.obj", "uvmap.dds", shader->getProgramID());
+	monkeyTwo = new Object("test.obj", "uvmap.dds", shader->getProgramID());
+
+	//Get renderer version
 	renderer = glGetString(GL_RENDERER);
 	version = glGetString(GL_VERSION);
 
-	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-	GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
-	GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
+	//Get shader variable locations, need to encapsulate this into shader class later.
+	GLuint MatrixID = glGetUniformLocation(shader->getProgramID(), "MVP");
+	GLuint ViewMatrixID = glGetUniformLocation(shader->getProgramID(), "V");
+	GLuint ModelMatrixID = glGetUniformLocation(shader->getProgramID(), "M");
+	GLuint LightID = glGetUniformLocation(shader->getProgramID(), "LightPosition_worldspace");
 
+	//Enable depth testing and backface culling
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
 
-	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
+	
 
 	while (!glfwWindowShouldClose(window))
 	{
+		//Clear frame and set to default color (navy blue)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glUseProgram(programID);
 
+		//Compute perspective matrices and return deltaTime
 		deltaTime = computeMatricesFromInputs(window);
-		glm::mat4 ProjectionMatrix = getProjectionMatrix();
-		glm::mat4 ViewMatrix = getViewMatrix();
 		glm::mat4 ModelMatrix = glm::mat4(1.0);
-		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+		glm::mat4 MVP = computeMVP();
 
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
-		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+		//Start shader and hand it perspective/light info
+		shader->start();
+		shader->loadMatrix(MatrixID, MVP);
+		shader->loadMatrix(ModelMatrixID, ModelMatrix);
+		shader->loadMatrix(ViewMatrixID, getViewMatrix());
+		shader->loadVector(LightID, lightPos);
 
-		glm::vec3 lightPos = glm::vec3(4, 4, 4);
-		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, monkey->getTexture());
-		glUniform1i(monkey->getTextureID(), 0);
-
+		//Render the monkeys
 		monkey->render();
 		monkeyTwo->render();
 
+		//Stop shader, not totally needed.
+		shader->stop();
+
+
+		//Input stuff for moving objects around, should probably encapsulate
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		{
 			break;
 		}
-
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, speed * deltaTime, 0);
@@ -146,10 +153,12 @@ int main()
 			monkey->translate(translation);
 		}
 
+		//Handle inputs and swap buffer to screen
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
 
+	//Kill
 	glfwTerminate();
 	return 0;
 }

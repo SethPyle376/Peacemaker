@@ -31,6 +31,12 @@ float speed = 3.0f; // 3 units / second
 float mouseSpeed = 0.005f;
 
 
+glm::mat4 computeMVP()
+{
+	return ProjectionMatrix * ViewMatrix * glm::mat4(1.0);
+}
+
+
 
 float computeMatricesFromInputs(GLFWwindow* window) {
 

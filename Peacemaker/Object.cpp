@@ -1,8 +1,9 @@
 #include "Object.h"
 
 
-Object::Object(std::string objectLocation, std::string textureLocation, GLuint programID)
+Object::Object(std::string objectLocation, std::string textureLocation, GLuint shaderID)
 {
+
 	bool res = loadObj(objectLocation.c_str(), vertices, uvs, normals);
 
 	if (!res)
@@ -32,9 +33,7 @@ Object::Object(std::string objectLocation, std::string textureLocation, GLuint p
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
 
 	texture = loadDDS(textureLocation.c_str());
-	textureID = glGetUniformLocation(programID, "myTextureSampler");
-
-
+	textureID = glGetUniformLocation(shaderID, "myTextureSampler");
 
 }
 

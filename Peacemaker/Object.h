@@ -35,7 +35,7 @@ private:
 	GLuint textureID;
 
 public:
-	Object(std::string objectLocation, std::string textureLocation, GLuint programID);
+	Object(std::string objectLocation, std::string textureLocation, GLuint shaderID);
 
 	void translate(glm::vec3 movement);
 
@@ -43,5 +43,4 @@ public:
 
 	GLuint getTexture();
 	GLuint getTextureID();
-
 };

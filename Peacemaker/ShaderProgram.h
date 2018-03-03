@@ -1,8 +1,10 @@
-#pragma once
+ #pragma once
 
 #include <string>
 #include <glm.hpp>
 #include <gl\glew.h>
+
+#include "ShaderManager.h"
 
 
 class ShaderProgram
@@ -16,14 +18,16 @@ private:
 public:
 	ShaderProgram(std::string vertexFile, std::string fragmentFile);
 
+	GLuint getProgramID();
+
 	void start();
 	void stop();
 
-	void loadFloat(int location, float value);
-	void loadInt(int location, int value);
-	void loadVector(int location, glm::vec3 value);
-	void loadVec2(int location, glm::vec2 value);
-	void loadMatrix(int location, glm::mat4 value);
+	void loadFloat(GLuint location, float value);
+	void loadInt(GLuint location, int value);
+	void loadVector(GLuint location, glm::vec3 value);
+	void loadVec2(GLuint location, glm::vec2 value);
+	void loadMatrix(GLuint location, glm::mat4 value);
 
 
 };
