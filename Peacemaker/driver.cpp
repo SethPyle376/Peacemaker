@@ -7,6 +7,7 @@
 #include "controller.h"
 
 #include "ShaderProgram.h"
+#include "Terrain.h"
 
 
 
@@ -24,6 +25,7 @@ float posZ = 0;
 
 Object* monkey;
 Object* monkeyTwo;
+Object* terrain;
 
 static const GLfloat vertexBuffer[] = {
 	-1.0, -1.0f, 0.0f,
@@ -43,10 +45,11 @@ int main()
 	width = 1920;
 	height = 1080;
 	
+
 	glfwInit();
 	window = glfwCreateWindow(width, height, "TEST", NULL, NULL);
 
-	glm::vec3 lightPos = glm::vec3(4, 4, 4);
+	glm::vec3 lightPos = glm::vec3(0, 0, 0);
 
 	if (!window)
 	{
@@ -74,6 +77,9 @@ int main()
 	//Load two objects, encapsulate into scene class later
 	monkey = new Object("LowPolyTree.obj", "uvmap.dds", shader->getProgramID());
 	monkeyTwo = new Object("test.obj", "uvmap.dds", shader->getProgramID());
+	terrain = new Object("terrain.obj", "uvmap.dds", shader->getProgramID());
+
+	//Terrain *terrain = new Terrain("tree.bmp", "uvmap.dds", shader->getProgramID());
 
 	//Get renderer version
 	renderer = glGetString(GL_RENDERER);
@@ -112,6 +118,7 @@ int main()
 		//Render the monkeys
 		monkey->render();
 		monkeyTwo->render();
+		terrain->render();
 
 		//Stop shader, not totally needed.
 		shader->stop();
@@ -126,31 +133,38 @@ int main()
 		{
 			glm::vec3 translation(0, speed * deltaTime, 0);
 			monkey->translate(translation);
+
+			lightPos = glm::vec3(lightPos.x, lightPos.y + speed * deltaTime, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, -speed * deltaTime, 0);
 			monkey->translate(translation);
+			lightPos = glm::vec3(lightPos.x, lightPos.y - speed * deltaTime, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
 			glm::vec3 translation(-speed * deltaTime, 0, 0);
 			monkey->translate(translation);
+			lightPos = glm::vec3(lightPos.x - speed * deltaTime, lightPos.y, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			glm::vec3 translation(speed * deltaTime, 0, 0);
 			monkey->translate(translation);
+			lightPos = glm::vec3(lightPos.x + speed * deltaTime, lightPos.y, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, 0, -speed * deltaTime);
 			monkey->translate(translation);
+			lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z - speed * deltaTime);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, 0, speed * deltaTime);
 			monkey->translate(translation);
+			lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z + speed * deltaTime);
 		}
 
 		//Handle inputs and swap buffer to screen
