@@ -88,6 +88,7 @@ private:
 		{
 			this->processNode(node->mChildren[i], scene);
 		}
+		std::cout << "MESHES: " << meshes.size() << std::endl;
 	}
 
 	Mesh processMesh(aiMesh *mesh, const aiScene *scene)
@@ -200,7 +201,6 @@ private:
 				texture.type = typeName;
 				texture.path = str;
 				textures.push_back(texture);
-
 				this->textures_loaded.push_back(texture);  // Store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 			}
 		}

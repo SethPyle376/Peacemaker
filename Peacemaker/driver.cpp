@@ -9,6 +9,7 @@
 
 
 #include "ShaderProgram.h"
+#include "Model.h"
 
 
 
@@ -76,9 +77,13 @@ int main()
 	ShaderProgram *shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
 
 	//Load two objects, encapsulate into scene class later
-	monkey = new Object("LowPolyTree.obj", "uvmap.dds", shader->getProgramID());
-	monkeyTwo = new Object("test.obj", "uvmap.dds", shader->getProgramID());
-	terrain = new Object("terrain.obj", "uvmap.dds", shader->getProgramID());
+	//monkey = new Object("LowPolyTree.obj", "uvmap.dds", shader->getProgramID());
+	//monkeyTwo = new Object("test.obj", "uvmap.dds", shader->getProgramID());
+	//terrain = new Object("terrain.obj", "uvmap.dds", shader->getProgramID());
+
+	//Model *model = new Model("res/models/nanosuit.obj");
+	Model *model = new Model("Small Tropical Island.obj");
+
 
 	//Terrain *terrain = new Terrain("tree.bmp", "uvmap.dds", shader->getProgramID());
 
@@ -98,7 +103,7 @@ int main()
 	glEnable(GL_CULL_FACE);
 
 	
-
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	while (!glfwWindowShouldClose(window))
 	{
 		//Clear frame and set to default color (navy blue)
@@ -117,11 +122,12 @@ int main()
 		shader->loadVector(LightID, lightPos);
 
 		//Render the monkeys
-		monkey->render();
-		monkeyTwo->render();
-		terrain->render();
+		//monkey->render();
+		//monkeyTwo->render();
+		//terrain->render();
 
 		//Stop shader, not totally needed.
+		model->Draw(*shader);
 		shader->stop();
 
 
@@ -133,38 +139,38 @@ int main()
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, speed * deltaTime, 0);
-			monkey->translate(translation);
+			//monkey->translate(translation);
 
 			lightPos = glm::vec3(lightPos.x, lightPos.y + speed * deltaTime, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, -speed * deltaTime, 0);
-			monkey->translate(translation);
+			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x, lightPos.y - speed * deltaTime, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
 			glm::vec3 translation(-speed * deltaTime, 0, 0);
-			monkey->translate(translation);
+			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x - speed * deltaTime, lightPos.y, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			glm::vec3 translation(speed * deltaTime, 0, 0);
-			monkey->translate(translation);
+			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x + speed * deltaTime, lightPos.y, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, 0, -speed * deltaTime);
-			monkey->translate(translation);
+			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z - speed * deltaTime);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, 0, speed * deltaTime);
-			monkey->translate(translation);
+			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z + speed * deltaTime);
 		}
 

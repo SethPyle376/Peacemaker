@@ -50,6 +50,7 @@ public:
 
 		// Now that we have all the required data, set the vertex buffers and its attribute pointers.
 		this->setupMesh();
+		std::cout << textures.size() << " textures set up" << std::endl;
 	}
 
 	// Render the mesh
@@ -58,6 +59,7 @@ public:
 		// Bind appropriate textures
 		GLuint diffuseNr = 1;
 		GLuint specularNr = 1;
+
 
 		for (GLuint i = 0; i < this->textures.size(); i++)
 		{
@@ -79,12 +81,13 @@ public:
 			number = ss.str();
 			// Now set the sampler to the correct texture unit
 			glUniform1i(glGetUniformLocation(shader.getProgramID(), (name + number).c_str()), i);
+			std::cout << "TEXTURE BOUND AT: " << (name + number).c_str() << std::endl;
 			// And finally bind the texture
 			glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
 		}
 
 		// Also set each mesh's shininess property to a default value (if you want you could extend this to another mesh property and possibly change this value)
-		glUniform1f(glGetUniformLocation(shader.getProgramID(), "material.shininess"), 16.0f);
+		//glUniform1f(glGetUniformLocation(shader.getProgramID(), "material.shininess"), 16.0f);
 
 		// Draw mesh
 		glBindVertexArray(this->VAO);
