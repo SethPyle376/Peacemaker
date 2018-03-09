@@ -87,12 +87,8 @@ public:
 			number = ss.str();
 			// Now set the sampler to the correct texture unit
 			glUniform1i(glGetUniformLocation(shader.getProgramID(), (name + number).c_str()), i);
-			std::cout << "TEXTURE BOUND AT: " << (name + number).c_str() << std::endl;
 			// And finally bind the texture
-			glBindTexture(GL_TEXTURE_2D, textureID/*this->textures[i].id*/);
-			std::cout << "ID: " << this->textures[i].id << std::endl;
-			std::cout << "PATH: " << this->textures[i].path.C_Str() << std::endl;
-			std::cout << "TYPE: " << this->textures[i].type << std::endl;
+			glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
 		}
 
 		// Also set each mesh's shininess property to a default value (if you want you could extend this to another mesh property and possibly change this value)
