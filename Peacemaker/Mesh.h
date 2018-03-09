@@ -12,6 +12,7 @@
 #include "ShaderProgram.h"
 
 #include "assimp/types.h"
+#include "BmpLoader.h"
 
 using namespace std;
 
@@ -40,6 +41,8 @@ public:
 	vector<GLuint> indices;
 	vector<Texture> textures;
 
+	GLuint textureID;
+
 	/*  Functions  */
 	// Constructor
 	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures)
@@ -51,6 +54,9 @@ public:
 		// Now that we have all the required data, set the vertex buffers and its attribute pointers.
 		this->setupMesh();
 		std::cout << textures.size() << " textures set up" << std::endl;
+
+		textureID = loadDDS("uvmap.dds");
+
 	}
 
 	// Render the mesh
@@ -83,7 +89,10 @@ public:
 			glUniform1i(glGetUniformLocation(shader.getProgramID(), (name + number).c_str()), i);
 			std::cout << "TEXTURE BOUND AT: " << (name + number).c_str() << std::endl;
 			// And finally bind the texture
-			glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
+			glBindTexture(GL_TEXTURE_2D, textureID/*this->textures[i].id*/);
+			std::cout << "ID: " << this->textures[i].id << std::endl;
+			std::cout << "PATH: " << this->textures[i].path.C_Str() << std::endl;
+			std::cout << "TYPE: " << this->textures[i].type << std::endl;
 		}
 
 		// Also set each mesh's shininess property to a default value (if you want you could extend this to another mesh property and possibly change this value)

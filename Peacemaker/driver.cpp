@@ -82,7 +82,7 @@ int main()
 	//terrain = new Object("terrain.obj", "uvmap.dds", shader->getProgramID());
 
 	//Model *model = new Model("res/models/nanosuit.obj");
-	Model *model = new Model("Small Tropical Island.obj");
+	Model *model = new Model("islandsmall.obj");
 
 
 	//Terrain *terrain = new Terrain("tree.bmp", "uvmap.dds", shader->getProgramID());
