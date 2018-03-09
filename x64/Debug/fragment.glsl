@@ -16,7 +16,7 @@ uniform vec3 LightPosition_worldspace;
 
 void main(){
 	vec3 LightColor = vec3(1, 1, 1);
-	float LightPower = 100000.0f;
+	float LightPower = 2000.0f;
 
 	vec3 MaterialDiffuseColor = texture(texture_diffuse1, UV).rgb;
 	vec3 MaterialAmbientColor = vec3(0.5, 0.5, 0.5) * MaterialDiffuseColor;
@@ -44,15 +44,15 @@ void main(){
 	//Cosine of angle between eye and reflect vector
 	float cosAlpha = clamp(dot(E, R), 0, 1);
 
-	/*color =
+	color =
 		//Fake ambient lighting
 		MaterialAmbientColor +
 		//Diffuse coloring
 		MaterialDiffuseColor * LightColor * LightPower * cosTheta / (distance * distance) +
 		//Specular coloring
-		MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha, 5) / (distance * distance);*/
+		MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha, 5) / (distance * distance);
 
-	color = MaterialDiffuseColor;
+	//color = MaterialDiffuseColor;
 
 
 }

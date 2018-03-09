@@ -51,7 +51,7 @@ int main()
 	glfwInit();
 	window = glfwCreateWindow(width, height, "TEST", NULL, NULL);
 
-	glm::vec3 lightPos = glm::vec3(0, 0, 0);
+	glm::vec3 lightPos = glm::vec3(0, 50, 50);
 
 	if (!window)
 	{
