@@ -72,20 +72,10 @@ int main()
 	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	//GLuint programID = shaderManager->LoadShaders("vertex.glsl", "fragment.glsl");
-
 	ShaderProgram *shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
-
-	//Load two objects, encapsulate into scene class later
-	//monkey = new Object("LowPolyTree.obj", "uvmap.dds", shader->getProgramID());
-	//monkeyTwo = new Object("test.obj", "uvmap.dds", shader->getProgramID());
-	//terrain = new Object("terrain.obj", "uvmap.dds", shader->getProgramID());
 
 	//Model *model = new Model("res/models/nanosuit.obj");
 	Model *model = new Model("islandsmall.obj");
-
-
-	//Terrain *terrain = new Terrain("tree.bmp", "uvmap.dds", shader->getProgramID());
 
 	//Get renderer version
 	renderer = glGetString(GL_RENDERER);
@@ -120,11 +110,6 @@ int main()
 		shader->loadMatrix(ModelMatrixID, ModelMatrix);
 		shader->loadMatrix(ViewMatrixID, getViewMatrix());
 		shader->loadVector(LightID, lightPos);
-
-		//Render the monkeys
-		//monkey->render();
-		//monkeyTwo->render();
-		//terrain->render();
 
 		//Stop shader, not totally needed.
 		model->Draw(*shader);
