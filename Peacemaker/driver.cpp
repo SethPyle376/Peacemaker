@@ -10,6 +10,7 @@
 
 #include "ShaderProgram.h"
 #include "Model.h"
+#include "Skybox.h"
 
 
 
@@ -73,9 +74,11 @@ int main()
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	ShaderProgram *shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
+	ShaderProgram *skyboxShader = new ShaderProgram("skyboxVertex.glsl", "skyboxFragment.glsl");
 
 	//Model *model = new Model("res/models/nanosuit.obj");
 	Model *model = new Model("islandsmall.obj");
+	Skybox *skybox = new Skybox(750);
 
 	//Get renderer version
 	renderer = glGetString(GL_RENDERER);
@@ -91,6 +94,9 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
+
+	GLuint skyView = glGetUniformLocation(skyboxShader->getProgramID(), "view");
+	GLuint skyProj = glGetUniformLocation(skyboxShader->getProgramID(), "projection");
 
 	
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -115,6 +121,12 @@ int main()
 		model->Draw(*shader);
 		shader->stop();
 
+		skyboxShader->start();
+		shader->loadMatrix(skyView, getViewMatrix());
+		shader->loadMatrix(skyProj, getProjectionMatrix());
+
+		skybox->draw(*skyboxShader);
+		skyboxShader->stop();
 
 		//Input stuff for moving objects around, should probably encapsulate
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
