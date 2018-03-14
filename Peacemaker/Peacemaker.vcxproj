@@ -145,7 +145,6 @@
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Skybox.h" />
-    <ClInclude Include="Tester.h" />
     <ClInclude Include="WaterFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
