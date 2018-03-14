@@ -16,12 +16,16 @@ uniform mat4 V;
 uniform mat4 M;
 uniform vec3 LightPosition_worldspace;
 
+uniform vec4 plane;
+
 void main(){
 	//output vertex position in clip space
 	gl_Position = MVP * vec4(vertexPosition_modelspace, 1);
 
 	//Vertex position in worldspace
 	Position_worldspace = (M * vec4(vertexPosition_modelspace, 1)).xyz;
+
+	gl_ClipDistance[0] = dot(vec4(Position_worldspace, 1), plane);
 
 	//Vector from vertex to camera in camera space
 	//Camera is at origin

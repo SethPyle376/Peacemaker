@@ -18,6 +18,11 @@ void ShaderProgram::loadVector(GLuint location, glm::vec3 value)
 	glUniform3f(location, value.x, value.y, value.z);
 }
 
+void ShaderProgram::loadVector4(GLuint location, glm::vec4 value)
+{
+	glUniform4f(location, value.x, value.y, value.z, value.w);
+}
+
 void ShaderProgram::loadVec2(GLuint location, glm::vec2 value)
 {
 }

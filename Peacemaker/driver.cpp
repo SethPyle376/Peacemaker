@@ -53,6 +53,7 @@ int main()
 	window = glfwCreateWindow(width, height, "TEST", NULL, NULL);
 
 	glm::vec3 lightPos = glm::vec3(0, 50, 50);
+	glm::vec4 planeHeight = glm::vec4(0, -1, 0, 10);
 
 	if (!window)
 	{
@@ -89,6 +90,7 @@ int main()
 	GLuint ViewMatrixID = glGetUniformLocation(shader->getProgramID(), "V");
 	GLuint ModelMatrixID = glGetUniformLocation(shader->getProgramID(), "M");
 	GLuint LightID = glGetUniformLocation(shader->getProgramID(), "LightPosition_worldspace");
+	GLuint planeHeightID = glGetUniformLocation(shader->getProgramID(), "plane");
 
 	//Enable depth testing and backface culling
 	glEnable(GL_DEPTH_TEST);
@@ -110,12 +112,15 @@ int main()
 		glm::mat4 ModelMatrix = glm::mat4(1.0);
 		glm::mat4 MVP = computeMVP();
 
+		glEnable(GL_CLIP_DISTANCE0);
+
 		//Start shader and hand it perspective/light info
 		shader->start();
 		shader->loadMatrix(MatrixID, MVP);
 		shader->loadMatrix(ModelMatrixID, ModelMatrix);
 		shader->loadMatrix(ViewMatrixID, getViewMatrix());
 		shader->loadVector(LightID, lightPos);
+		shader->loadVector4(planeHeightID, planeHeight);
 
 		//Stop shader, not totally needed.
 		model->Draw(*shader);
