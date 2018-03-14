@@ -135,6 +135,7 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="vboindexer.cpp" />
+    <ClCompile Include="WaterFrameBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Tester.h" />
     <ClInclude Include="vboindexer.h" />
+    <ClInclude Include="WaterFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

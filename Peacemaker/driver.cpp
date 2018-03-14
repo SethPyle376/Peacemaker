@@ -40,7 +40,7 @@ static const GLfloat vertexBuffer[] = {
 int main()
 {
 	float deltaTime;
-	float speed = 3;
+	float speed = 30;
 	GLFWwindow *window = NULL;
 	const GLubyte *renderer;
 	const GLubyte *version;
