@@ -2,7 +2,6 @@
 #include <GL\glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "Object.h"
 #include <gtc\matrix_transform.hpp>
 #include "controller.h"
 
@@ -26,16 +25,6 @@ float posX = 0;
 float posY = 0;
 float posZ = 0;
 
-Object* monkey;
-Object* monkeyTwo;
-Object* terrain;
-
-static const GLfloat vertexBuffer[] = {
-	-1.0, -1.0f, 0.0f,
-	1.0f, -1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f
-};
-
 
 int main()
 {
@@ -53,7 +42,7 @@ int main()
 	window = glfwCreateWindow(width, height, "TEST", NULL, NULL);
 
 	glm::vec3 lightPos = glm::vec3(0, 50, 50);
-	glm::vec4 planeHeight = glm::vec4(0, -1, 0, 10);
+	glm::vec4 planeHeight = glm::vec4(0, -1, 0, 50);
 
 	if (!window)
 	{
@@ -141,38 +130,31 @@ int main()
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, speed * deltaTime, 0);
-			//monkey->translate(translation);
-
 			lightPos = glm::vec3(lightPos.x, lightPos.y + speed * deltaTime, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, -speed * deltaTime, 0);
-			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x, lightPos.y - speed * deltaTime, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
 			glm::vec3 translation(-speed * deltaTime, 0, 0);
-			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x - speed * deltaTime, lightPos.y, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			glm::vec3 translation(speed * deltaTime, 0, 0);
-			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x + speed * deltaTime, lightPos.y, lightPos.z);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, 0, -speed * deltaTime);
-			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z - speed * deltaTime);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		{
 			glm::vec3 translation(0, 0, speed * deltaTime);
-			//monkey->translate(translation);
 			lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z + speed * deltaTime);
 		}
 

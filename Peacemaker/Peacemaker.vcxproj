@@ -128,13 +128,10 @@
     <ClCompile Include="BMPLoader.cpp" />
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="driver.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Skybox.cpp" />
-    <ClCompile Include="vboindexer.cpp" />
     <ClCompile Include="WaterFrameBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,15 +140,12 @@
     <ClInclude Include="controller.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Tester.h" />
-    <ClInclude Include="vboindexer.h" />
     <ClInclude Include="WaterFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>

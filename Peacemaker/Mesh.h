@@ -18,11 +18,8 @@ using namespace std;
 
 struct Vertex
 {
-	// Position
 	glm::vec3 Position;
-	// Normal
 	glm::vec3 Normal;
-	// TexCoords
 	glm::vec2 TexCoords;
 };
 
@@ -43,20 +40,16 @@ public:
 
 	GLuint textureID;
 
-	/*  Functions  */
-	// Constructor
 	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures)
 	{
 		this->vertices = vertices;
 		this->indices = indices;
 		this->textures = textures;
 
-		// Now that we have all the required data, set the vertex buffers and its attribute pointers.
 		this->setupMesh();
 		std::cout << textures.size() << " textures set up" << std::endl;
 
 		textureID = loadDDS("uvmap.dds");
-
 	}
 
 	// Render the mesh
@@ -69,8 +62,8 @@ public:
 
 		for (GLuint i = 0; i < this->textures.size(); i++)
 		{
-			glActiveTexture(GL_TEXTURE0 + i); // Active proper texture unit before binding
-											  // Retrieve texture number (the N in diffuse_textureN)
+			glActiveTexture(GL_TEXTURE0 + i); 
+											  
 			stringstream ss;
 			string number;
 			string name = this->textures[i].type;
@@ -96,7 +89,6 @@ public:
 		glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
-		// Always good practice to set everything back to defaults once configured.
 		for (GLuint i = 0; i < this->textures.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);

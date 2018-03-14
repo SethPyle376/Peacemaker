@@ -24,8 +24,6 @@ Skybox::Skybox(int scale)
 	faces.push_back("bluecloud_bk.jpg");
 	faces.push_back("bluecloud_ft.jpg");
 
-
-	
 	cubemapTexture = loadCubemap(faces);
 }
 
@@ -81,6 +79,7 @@ GLuint Skybox::loadCubemap(std::vector<const GLchar * > faces)
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 		SOIL_free_image_data(image);
 	}
+
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

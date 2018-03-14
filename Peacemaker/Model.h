@@ -47,10 +47,8 @@ private:
 	/*  Model Data  */
 	vector<Mesh> meshes;
 	string directory;
-	vector<Texture> textures_loaded;	// Stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+	vector<Texture> textures_loaded;	
 
-										/*  Functions   */
-										// Loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
 	void loadModel(string path)
 	{
 		// Read file via ASSIMP
@@ -70,20 +68,19 @@ private:
 		this->processNode(scene->mRootNode, scene);
 	}
 
-	// Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
+
 	void processNode(aiNode* node, const aiScene* scene)
 	{
 		// Process each mesh located at the current node
 		for (GLuint i = 0; i < node->mNumMeshes; i++)
 		{
-			// The node object only contains indices to index the actual objects in the scene.
-			// The scene contains all the data, node is just to keep stuff organized (like relations between nodes).
+
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 
 			this->meshes.push_back(this->processMesh(mesh, scene));
 		}
 
-		// After we've processed all of the meshes (if any) we then recursively process each of the children nodes
+
 		for (GLuint i = 0; i < node->mNumChildren; i++)
 		{
 			this->processNode(node->mChildren[i], scene);
@@ -102,9 +99,8 @@ private:
 		for (GLuint i = 0; i < mesh->mNumVertices; i++)
 		{
 			Vertex vertex;
-			glm::vec3 vector; // We declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
+			glm::vec3 vector;
 
-							  // Positions
 			vector.x = mesh->mVertices[i].x;
 			vector.y = mesh->mVertices[i].y;
 			vector.z = mesh->mVertices[i].z;
@@ -117,7 +113,7 @@ private:
 			vertex.Normal = vector;
 
 			// Texture Coordinates
-			if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
+			if (mesh->mTextureCoords[0]) 
 			{
 				glm::vec2 vec;
 				vec.x = mesh->mTextureCoords[0][i].x;
@@ -132,11 +128,9 @@ private:
 			vertices.push_back(vertex);
 		}
 
-		// Now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
 		for (GLuint i = 0; i < mesh->mNumFaces; i++)
 		{
 			aiFace face = mesh->mFaces[i];
-			// Retrieve all indices of the face and store them in the indices vector
 			for (GLuint j = 0; j < face.mNumIndices; j++)
 			{
 				indices.push_back(face.mIndices[j]);
@@ -147,14 +141,7 @@ private:
 		if (mesh->mMaterialIndex >= 0)
 		{
 			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-			// We assume a convention for sampler names in the shaders. Each diffuse texture should be named
-			// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER.
-			// Same applies to other texture as the following list summarizes:
-			// Diffuse: texture_diffuseN
-			// Specular: texture_specularN
-			// Normal: texture_normalN
 
-			// 1. Diffuse maps
 			vector<Texture> diffuseMaps = this->loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
@@ -163,12 +150,10 @@ private:
 			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 		}
 
-		// Return a mesh object created from the extracted mesh data
 		return Mesh(vertices, indices, textures);
 	}
 
-	// Checks all material textures of a given type and loads the textures if they're not loaded yet.
-	// The required info is returned as a Texture struct.
+
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName)
 	{
 		vector<Texture> textures;
@@ -178,7 +163,6 @@ private:
 			aiString str;
 			mat->GetTexture(type, i, &str);
 
-			// Check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
 			GLboolean skip = false;
 
 			for (GLuint j = 0; j < textures_loaded.size(); j++)
@@ -186,20 +170,20 @@ private:
 				if (textures_loaded[j].path == str)
 				{
 					textures.push_back(textures_loaded[j]);
-					skip = true; // A texture with the same filepath has already been loaded, continue to next one. (optimization)
+					skip = true; 
 
 					break;
 				}
 			}
 
 			if (!skip)
-			{   // If texture hasn't been loaded already, load it
+			{   
 				Texture texture;
 				texture.id = TextureFromFile(str.C_Str(), this->directory);
 				texture.type = typeName;
 				texture.path = str;
 				textures.push_back(texture);
-				this->textures_loaded.push_back(texture);  // Store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+				this->textures_loaded.push_back(texture); 
 			}
 		}
 
