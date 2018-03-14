@@ -18,7 +18,7 @@ private:
 
 	GLuint refractionFBO;
 	GLuint refractionTexture;
-	GLuint refractionDepthBuffer;
+	GLuint refractionDepthTexture;
 
 	GLuint createFrameBuffer();
 	GLuint createTextureAttachment(int width, int height);
@@ -27,6 +27,8 @@ private:
 
 	void initializeReflection();
 	void initializeRefraction();
+
+	void bindFrameBuffer(GLuint frameBuffer, int width, int height);
 
 public:
 	WaterFrameBuffer();
@@ -37,5 +39,5 @@ public:
 
 	GLuint getReflectionTexture();
 	GLuint getRefractionTexture();
-	GLuint getRefractionDepth();
+	GLuint getRefractionDepthTexture();
 };
