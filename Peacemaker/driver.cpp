@@ -10,6 +10,7 @@
 #include "ShaderProgram.h"
 #include "Model.h"
 #include "Skybox.h"
+#include "Water.h"
 
 
 
@@ -65,10 +66,12 @@ int main()
 
 	ShaderProgram *shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
 	ShaderProgram *skyboxShader = new ShaderProgram("skyboxVertex.glsl", "skyboxFragment.glsl");
+	ShaderProgram *waterShader = new ShaderProgram("watervertex.glsl", "waterfragment.glsl");
 
 	//Model *model = new Model("res/models/nanosuit.obj");
 	Model *model = new Model("islandsmall.obj");
 	Skybox *skybox = new Skybox(750);
+	Water *water = new Water(3.25, 100, 100);
 
 	//Get renderer version
 	renderer = glGetString(GL_RENDERER);
@@ -89,6 +92,9 @@ int main()
 	GLuint skyView = glGetUniformLocation(skyboxShader->getProgramID(), "view");
 	GLuint skyProj = glGetUniformLocation(skyboxShader->getProgramID(), "projection");
 
+	GLuint projectionMatrix = glGetUniformLocation(waterShader->getProgramID(), "projectionMatrix");
+	GLuint viewMatrix = glGetUniformLocation(waterShader->getProgramID(), "viewMatrix");
+	GLuint modelMatrix = glGetUniformLocation(waterShader->getProgramID(), "modelMatrix");
 	
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	while (!glfwWindowShouldClose(window))
@@ -121,6 +127,14 @@ int main()
 
 		skybox->draw(*skyboxShader);
 		skyboxShader->stop();
+
+		waterShader->start();
+		waterShader->loadMatrix(projectionMatrix, getProjectionMatrix());
+		waterShader->loadMatrix(viewMatrix, getViewMatrix());
+		waterShader->loadMatrix(modelMatrix, ModelMatrix);
+
+		water->render(*waterShader);
+		waterShader->stop();
 
 		//Input stuff for moving objects around, should probably encapsulate
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

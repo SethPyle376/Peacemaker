@@ -132,6 +132,7 @@
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Water.cpp" />
     <ClCompile Include="WaterFrameBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +146,7 @@
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="Water.h" />
     <ClInclude Include="WaterFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
