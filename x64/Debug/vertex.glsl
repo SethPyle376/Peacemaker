@@ -25,7 +25,7 @@ void main(){
 	//Vertex position in worldspace
 	Position_worldspace = (M * vec4(vertexPosition_modelspace, 1)).xyz;
 
-	gl_ClipDistance[0] = dot(vec4(Position_worldspace, 1), plane);
+	//gl_ClipDistance[0] = dot(vec4(Position_worldspace, 1), plane);
 
 	//Vector from vertex to camera in camera space
 	//Camera is at origin

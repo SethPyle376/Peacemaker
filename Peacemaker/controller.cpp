@@ -1,4 +1,4 @@
-#include <GLFW\glfw3.h>
+
 //extern GLFWwindow* window;
 
 #include "controller.h"
@@ -9,6 +9,12 @@ using namespace glm;
 
 glm::mat4 ViewMatrix;
 glm::mat4 ProjectionMatrix;
+glm::vec3 position = glm::vec3(0, 15, 5);
+
+// Initial horizontal angle : toward -Z
+float horizontalAngle = glm::pi<float>();
+// Initial vertical angle : none
+float verticalAngle = -(glm::pi<float>() / 4.0f);
 
 glm::mat4 getViewMatrix() {
 	return ViewMatrix;
@@ -16,20 +22,43 @@ glm::mat4 getViewMatrix() {
 glm::mat4 getProjectionMatrix() {
 	return ProjectionMatrix;
 }
+glm::vec3 getPosition()
+{
+	return position;
+}
+
+void setPosition(float updatedY)
+{
+	position.y = updatedY;
+}
+
+glm::vec2 getRotation()
+{
+	return glm::vec2(horizontalAngle, verticalAngle);
+}
+
+void setRotation(glm::vec2 newRotation)
+{
+	horizontalAngle = newRotation.x;
+	verticalAngle = newRotation.y;
+}
 
 
 // Initial position : on +Z
-glm::vec3 position = glm::vec3(0, 15, 5);
-// Initial horizontal angle : toward -Z
-float horizontalAngle = 3.14f;
-// Initial vertical angle : none
-float verticalAngle = 0.0f;
+
+
 // Initial Field of View
 float initialFoV = 45.0f;
 
 float speed = 6.0f; // 3 units / second
 float mouseSpeed = 0.005f;
 
+
+void invertPitch()
+{
+	verticalAngle += glm::pi<float>();
+	horizontalAngle += glm::pi<float>();
+}
 
 glm::mat4 computeMVP()
 {
@@ -38,7 +67,7 @@ glm::mat4 computeMVP()
 
 
 
-float computeMatricesFromInputs(GLFWwindow* window) {
+float computeMatricesFromInputs(GLFWwindow* window, bool inverted) {
 
 	// glfwGetTime is called only once, the first time this function is called
 	static double lastTime = glfwGetTime();
@@ -58,6 +87,12 @@ float computeMatricesFromInputs(GLFWwindow* window) {
 	horizontalAngle += mouseSpeed * float(1024 / 2 - xpos);
 	verticalAngle += mouseSpeed * float(768 / 2 - ypos);
 
+	if (inverted)
+	{
+		verticalAngle += (glm::pi<float>() / 2);
+	}
+	
+
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
 	glm::vec3 direction(
 		cos(verticalAngle) * sin(horizontalAngle),
@@ -75,21 +110,30 @@ float computeMatricesFromInputs(GLFWwindow* window) {
 	// Up vector
 	glm::vec3 up = glm::cross(right, direction);
 
-	// Move forward
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		position += direction * deltaTime * speed;
+	if (inverted)
+	{
+		up = glm::vec3(0, -1, 0);
+		verticalAngle -= (glm::pi<float>() / 2);
 	}
-	// Move backward
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		position -= direction * deltaTime * speed;
-	}
-	// Strafe right
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-		position += right * deltaTime * speed;
-	}
-	// Strafe left
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		position -= right * deltaTime * speed;
+
+	if (!inverted)
+	{
+		// Move forward
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+			position += direction * deltaTime * speed;
+		}
+		// Move backward
+		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+			position -= direction * deltaTime * speed;
+		}
+		// Strafe right
+		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+			position += right * deltaTime * speed;
+		}
+		// Strafe left
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+			position -= right * deltaTime * speed;
+		}
 	}
 
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.

@@ -9,8 +9,9 @@ void ShaderProgram::loadFloat(GLuint location, float value)
 {
 }
 
-void ShaderProgram::loadInt(GLuint location, int value)
+void ShaderProgram::loadInt(GLuint location, GLuint value)
 {
+	glUniform1i(location, value);
 }
 
 void ShaderProgram::loadVector(GLuint location, glm::vec3 value)

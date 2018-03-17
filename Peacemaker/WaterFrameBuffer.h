@@ -40,4 +40,6 @@ public:
 	GLuint getReflectionTexture();
 	GLuint getRefractionTexture();
 	GLuint getRefractionDepthTexture();
+
+	void prepare();
 };
