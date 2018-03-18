@@ -311,7 +311,8 @@ void Ocean::render(float t, glm::vec3 light_pos, glm::mat4 Projection, glm::mat4
 	evaluateWavesFFT(t);
 	//evaluateWaves(t);
 	
-
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 	glUseProgram(glProgram);
 	glUniform3f(light_position, light_pos.x, light_pos.y, light_pos.z);
 	glUniformMatrix4fv(projection, 1, GL_FALSE, &Projection[0][0]);
@@ -336,6 +337,8 @@ void Ocean::render(float t, glm::vec3 light_pos, glm::mat4 Projection, glm::mat4
 			glDrawElements(geometry ? GL_LINES : GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, 0);
 		}
 	}
+
+	glDisable(GL_BLEND);
 
 	//std::cout << vertices[0].x << " " << vertices[0].y << " " << vertices[0].z << std::endl;
 }

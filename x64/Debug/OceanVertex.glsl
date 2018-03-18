@@ -15,6 +15,8 @@ out vec3 halfway_vector;
 out float fog_factor;
 out vec2 tex_coord;
 
+out vec4 truePosition;
+
 void main() {
 	gl_Position = View * Model * vec4(vertex, 1.0);
 	fog_factor = min(-gl_Position.z/100.0, 1.0);
@@ -28,4 +30,5 @@ void main() {
         halfway_vector = light_vector + normalize(-v.xyz);
 
 	tex_coord = texture.xy;
+	truePosition = gl_Position;
 }

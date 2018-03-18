@@ -79,7 +79,7 @@ int main()
 	Model *model = new Model("islandsmall.obj");
 	Skybox *skybox = new Skybox(750);
 	Water *water = new Water(waterHeight, 50, 50);
-	Ocean *ocean = new Ocean(64, 0.01f, glm::vec2(8.0f, 8.0f), 8.0f, false, oceanShader->getProgramID());
+	Ocean *ocean = new Ocean(64, 0.0005f, glm::vec2(16.0f, 16.0f), 64.0f, false, oceanShader->getProgramID());
 
 	WaterFrameBuffer *waterBuffers = new WaterFrameBuffer();
 
@@ -198,6 +198,12 @@ int main()
 		model->Draw(*shader);
 		shader->stop();
 
+		
+
+		oceanShader->start();
+		ocean->render(totalTime, lightPos, getProjectionMatrix(), getViewMatrix(), ModelMatrix, true);
+		oceanShader->stop();
+
 		skyboxShader->start();
 		skyboxShader->loadMatrix(skyView, getViewMatrix());
 		skyboxShader->loadMatrix(skyProj, getProjectionMatrix());
@@ -205,9 +211,7 @@ int main()
 		skybox->draw(*skyboxShader);
 		skyboxShader->stop();
 
-		oceanShader->start();
-		ocean->render(totalTime, lightPos, getProjectionMatrix(), getViewMatrix(), ModelMatrix, true);
-		oceanShader->stop();
+
 
 
 		/*waterShader->start();
