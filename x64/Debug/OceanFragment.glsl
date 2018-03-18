@@ -3,6 +3,7 @@
 in vec3 normal_vector;
 in vec3 light_vector;
 in vec3 halfway_vector;
+in vec4 truePosition;
 in vec2 tex_coord;
 in float fog_factor;
 uniform sampler2D water;
@@ -17,9 +18,13 @@ void main (void) {
 
 	vec4 c = vec4(1,1,1,1);//texture(water, tex_coord);
 
+	float blue = min(gl_FragCoord.y/100, 1);
+
+	blue = blue * (1.0 - blue);
+
 	vec4 emissive_color = vec4(1.0, 1.0, 1.0,  1.0);
 	vec4 ambient_color  = vec4(0.0, 0.65, 0.75, 1.0);
-	vec4 diffuse_color  = vec4(0.5, 0.65, 0.75, 1.0);
+	vec4 diffuse_color  = vec4(0, 0.25, blue, 1.0);
 	vec4 specular_color = vec4(1.0, 0.25, 0.0,  1.0);
 
 	float emissive_contribution = 0.00;
@@ -37,9 +42,9 @@ void main (void) {
 			specular_color * specular_contribution * c * max(pow(dot(normal1, halfway_vector1), 120.0), 0.0) :
 			vec4(0.0, 0.0, 0.0, 0.0));
 
-	fragColor = fragColor * (1.0-fog_factor) + vec4(0.25, 0.75, 0.65, 1.0) * (fog_factor);
+	fragColor = fragColor * (1.0-fog_factor) + vec4(0, 0, 0.25, 1.0) * (fog_factor);
 
-	fragColor.a = 0.5;
+	fragColor.a = 0.8;
 
 	//fragColor = vec4(1, 0, 0, 1);
 }

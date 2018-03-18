@@ -10,6 +10,8 @@ out vec3 Position_worldspace;
 out vec3 Normal_cameraspace;
 out vec3 EyeDirection_cameraspace;
 out vec3 LightDirection_cameraspace;
+out vec3 halfway_vector;
+out float fog_factor;
 
 uniform mat4 MVP;
 uniform mat4 V;
@@ -21,6 +23,8 @@ uniform vec4 plane;
 void main(){
 	//output vertex position in clip space
 	gl_Position = MVP * vec4(vertexPosition_modelspace, 1);
+
+	fog_factor = min(-gl_Position.z/100.0, 1.0);
 
 	//Vertex position in worldspace
 	Position_worldspace = (M * vec4(vertexPosition_modelspace, 1)).xyz;
@@ -40,4 +44,6 @@ void main(){
 	Normal_cameraspace = (V * M * vec4(vertexNormal_modelspace, 0)).xyz;
 
 	UV = vertexUV;
+
+	halfway_vector = LightDirection_cameraspace + normalize(-vertexPosition_cameraspace);
 }
