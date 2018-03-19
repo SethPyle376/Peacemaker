@@ -79,7 +79,7 @@ int main()
 	Model *model = new Model("islandsmall.obj");
 	Skybox *skybox = new Skybox(750);
 	Water *water = new Water(waterHeight, 50, 50);
-	Ocean *ocean = new Ocean(64, 0.0005f, glm::vec2(16.0f, 16.0f), 64.0f, false, oceanShader->getProgramID());
+	Ocean *ocean = new Ocean(64, 0.5f, glm::vec2(1.0f, 1.0f), 2.0f, false, oceanShader->getProgramID());
 
 	WaterFrameBuffer *waterBuffers = new WaterFrameBuffer();
 
@@ -123,65 +123,6 @@ int main()
 		//Clear frame and set to default color (navy blue)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//Compute perspective matrices and return deltaTime
-		/*setPosition(reflectDown);
-		deltaTime = computeMatricesFromInputs(window, true);
-		glm::mat4 ModelMatrix = glm::mat4(1.0);
-		glm::mat4 MVP = computeMVP();
-
-		glEnable(GL_CLIP_DISTANCE0);
-
-		//Start shader and hand it perspective/light info
-		waterBuffers->bindReflection();
-		shader->start();
-		shader->loadMatrix(MatrixID, MVP);
-		shader->loadMatrix(ModelMatrixID, ModelMatrix);
-		shader->loadMatrix(ViewMatrixID, getViewMatrix());
-		shader->loadVector(LightID, lightPos);
-		shader->loadVector4(planeHeightID, reflectionPlaneHeight);
-		
-		model->Draw(*shader);
-		shader->stop();
-
-		skyboxShader->start();
-		skyboxShader->loadMatrix(skyView, getViewMatrix());
-		skyboxShader->loadMatrix(skyProj, getProjectionMatrix());
-
-		skybox->draw(*skyboxShader);
-		skyboxShader->stop();
-
-		waterBuffers->unbindFBO();
-
-
-		//setPosition(previousY);
-		//computeMatricesFromInputs(window, false);
-		//MVP = computeMVP();
-
-		waterBuffers->bindRefraction();
-		shader->start();
-		shader->loadMatrix(MatrixID, MVP);
-		shader->loadMatrix(ModelMatrixID, ModelMatrix);
-		shader->loadMatrix(ViewMatrixID, getViewMatrix());
-		shader->loadVector(LightID, lightPos);
-		shader->loadVector4(planeHeightID, refractionPlaneHeight);
-
-		model->Draw(*shader);
-		shader->stop();
-
-
-		skyboxShader->start();
-		skyboxShader->loadMatrix(skyView, getViewMatrix());
-		skyboxShader->loadMatrix(skyProj, getProjectionMatrix());
-
-		skybox->draw(*skyboxShader);
-		skyboxShader->stop();
-
-		waterBuffers->unbindFBO();
-
-
-		glDisable(GL_CLIP_DISTANCE0);
-		*/
-
 		deltaTime = computeMatricesFromInputs(window, false);
 		glm::mat4 ModelMatrix = glm::mat4(1.0);
 		glm::mat4 MVP = computeMVP();
@@ -198,12 +139,6 @@ int main()
 		model->Draw(*shader);
 		shader->stop();
 
-		
-
-		oceanShader->start();
-		ocean->render(totalTime, lightPos, getProjectionMatrix(), getViewMatrix(), ModelMatrix, true);
-		oceanShader->stop();
-
 		skyboxShader->start();
 		skyboxShader->loadMatrix(skyView, getViewMatrix());
 		skyboxShader->loadMatrix(skyProj, getProjectionMatrix());
@@ -212,19 +147,10 @@ int main()
 		skyboxShader->stop();
 
 
+		oceanShader->start();
+		ocean->render(totalTime, lightPos, getProjectionMatrix(), getViewMatrix(), ModelMatrix, true);
+		oceanShader->stop();
 
-
-		/*waterShader->start();
-		waterShader->loadMatrix(projectionMatrix, getProjectionMatrix());
-		waterShader->loadMatrix(viewMatrix, getViewMatrix());
-		waterShader->loadMatrix(modelMatrix, ModelMatrix);
-		waterBuffers->prepare();
-		waterShader->loadInt(reflectionTexture, 0);
-		waterShader->loadInt(refractionTexture, 1);
-		
-		
-		water->render(*waterShader);
-		waterShader->stop();*/
 
 		//Input stuff for moving objects around, should probably encapsulate
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

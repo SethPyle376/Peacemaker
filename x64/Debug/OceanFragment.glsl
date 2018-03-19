@@ -18,7 +18,7 @@ void main (void) {
 
 	vec4 c = vec4(1,1,1,1);//texture(water, tex_coord);
 
-	float blue = min(gl_FragCoord.y/100, 1);
+	float blue = min(gl_FragCoord.y/100, 0.5);
 
 	blue = blue * (1.0 - blue);
 
@@ -44,7 +44,7 @@ void main (void) {
 
 	fragColor = fragColor * (1.0-fog_factor) + vec4(0, 0, 0.25, 1.0) * (fog_factor);
 
-	fragColor.a = 0.8;
+	fragColor.a = 1.0;
 
 	//fragColor = vec4(1, 0, 0, 1);
 }
