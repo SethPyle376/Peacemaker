@@ -17,12 +17,12 @@ Skybox::Skybox(int scale)
 	glBindVertexArray(0);
 
 	std::vector<const GLchar*> faces;
-	faces.push_back("bluecloud_rt.jpg");
-	faces.push_back("bluecloud_lf.jpg");
-	faces.push_back("bluecloud_up.jpg");
-	faces.push_back("bluecloud_dn.jpg");
-	faces.push_back("bluecloud_bk.jpg");
-	faces.push_back("bluecloud_ft.jpg");
+	faces.push_back("res/textures/skybox/bluecloud_rt.jpg");
+	faces.push_back("res/textures/skybox/bluecloud_lf.jpg");
+	faces.push_back("res/textures/skybox/bluecloud_up.jpg");
+	faces.push_back("res/textures/skybox/bluecloud_dn.jpg");
+	faces.push_back("res/textures/skybox/bluecloud_bk.jpg");
+	faces.push_back("res/textures/skybox/bluecloud_ft.jpg");
 
 	cubemapTexture = loadCubemap(faces);
 }

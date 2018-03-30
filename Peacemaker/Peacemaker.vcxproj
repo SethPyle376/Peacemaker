@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BMPLoader.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Complex.cpp" />
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="driver.cpp" />

@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <gtc\matrix_transform.hpp>
-#include "controller.h"
+#include "Camera.h"
 
 
 
@@ -70,16 +70,17 @@ int main()
 	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	ShaderProgram *shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
-	ShaderProgram *skyboxShader = new ShaderProgram("skyboxVertex.glsl", "skyboxFragment.glsl");
-	ShaderProgram *waterShader = new ShaderProgram("watervertex.glsl", "waterfragment.glsl");
-	ShaderProgram *oceanShader = new ShaderProgram("OceanVertex.glsl", "OceanFragment.glsl");
+	Camera *camera = new Camera();
+
+	ShaderProgram *shader = new ShaderProgram("res/shaders/vertex.glsl", "res/shaders/fragment.glsl");
+	ShaderProgram *skyboxShader = new ShaderProgram("res/shaders/skyboxVertex.glsl", "res/shaders/skyboxFragment.glsl");
+	ShaderProgram *waterShader = new ShaderProgram("res/shaders/watervertex.glsl", "res/shaders/waterfragment.glsl");
+	ShaderProgram *oceanShader = new ShaderProgram("res/shaders/OceanVertex.glsl", "res/shaders/OceanFragment.glsl");
 
 	//Model *model = new Model("res/models/nanosuit.obj");
-	Model *model = new Model("islandsmall.obj");
-	Skybox *skybox = new Skybox(750);
+	Model *model = new Model("res/models/sponza.obj");
+	Skybox *skybox = new Skybox(2000);
 	Water *water = new Water(waterHeight, 50, 50);
-	Ocean *ocean = new Ocean(64, 0.5f, glm::vec2(1.0f, 1.0f), 2.0f, false, oceanShader->getProgramID());
 
 	WaterFrameBuffer *waterBuffers = new WaterFrameBuffer();
 
@@ -109,48 +110,35 @@ int main()
 	GLuint reflectionTexture = glGetUniformLocation(waterShader->getProgramID(), "reflectionTexture");
 	GLuint refractionTexture = glGetUniformLocation(waterShader->getProgramID(), "refractionTexture");
 	
-	float reflectDown = getPosition().y - (2 * (getPosition().y - waterHeight));
-	
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	while (!glfwWindowShouldClose(window))
 	{
-		float previousY = getPosition().y;
-		
-
-		
-		glm::vec2 previousRotation = getRotation();
-
 		//Clear frame and set to default color (navy blue)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		deltaTime = computeMatricesFromInputs(window, false);
+		deltaTime = camera->update(window);
 		glm::mat4 ModelMatrix = glm::mat4(1.0);
-		glm::mat4 MVP = computeMVP();
+		glm::mat4 MVP = camera->getTransformationMatrix();
 		totalTime += (deltaTime / 8);
 
+		skyboxShader->start();
+		skyboxShader->loadMatrix(skyView, camera->getViewMatrix());
+		skyboxShader->loadMatrix(skyProj, camera->getProjectionMatrix());
+
+		skybox->draw(*skyboxShader);
+		skyboxShader->stop();
 
 		shader->start();
 		shader->loadMatrix(MatrixID, MVP);
 		shader->loadMatrix(ModelMatrixID, ModelMatrix);
-		shader->loadMatrix(ViewMatrixID, getViewMatrix());
+		shader->loadMatrix(ViewMatrixID, camera->getViewMatrix());
 		shader->loadVector(LightID, lightPos);
 		shader->loadVector4(planeHeightID, refractionPlaneHeight);
 
 		model->Draw(*shader);
 		shader->stop();
 
-		skyboxShader->start();
-		skyboxShader->loadMatrix(skyView, getViewMatrix());
-		skyboxShader->loadMatrix(skyProj, getProjectionMatrix());
-
-		skybox->draw(*skyboxShader);
-		skyboxShader->stop();
-
-
-		oceanShader->start();
-		ocean->render(totalTime, lightPos, getProjectionMatrix(), getViewMatrix(), ModelMatrix, true);
-		oceanShader->stop();
-
+		
 
 		//Input stuff for moving objects around, should probably encapsulate
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

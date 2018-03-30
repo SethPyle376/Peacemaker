@@ -12,7 +12,7 @@
 #include "ShaderProgram.h"
 
 #include "assimp/types.h"
-#include "BmpLoader.h"
+
 
 using namespace std;
 
@@ -49,7 +49,6 @@ public:
 		this->setupMesh();
 		std::cout << textures.size() << " textures set up" << std::endl;
 
-		textureID = loadDDS("uvmap.dds");
 	}
 
 	// Render the mesh
