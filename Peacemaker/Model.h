@@ -35,7 +35,7 @@ public:
 	}
 
 	// Draws the model, and thus all its meshes
-	void Draw(ShaderProgram shader)
+	void Draw(ShaderProgram *shader)
 	{
 		for (GLuint i = 0; i < this->meshes.size(); i++)
 		{
@@ -191,7 +191,7 @@ private:
 	}
 };
 
-GLint TextureFromFile(const char *path, string directory)
+inline GLint TextureFromFile(const char *path, string directory)
 {
 	//Generate texture ID and load texture data
 	string filename = string(path);

@@ -131,13 +131,11 @@
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="FastFourierTransform.cpp" />
-    <ClCompile Include="Ocean.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Skybox.cpp" />
-    <ClCompile Include="Water.cpp" />
-    <ClCompile Include="WaterFrameBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -146,16 +144,14 @@
     <ClInclude Include="Complex.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="FastFourierTransform.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="Ocean.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Skybox.h" />
-    <ClInclude Include="Water.h" />
-    <ClInclude Include="WaterFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
