@@ -4,6 +4,7 @@
 #include "Actor.h"
 #include "Camera.h"
 #include "Light.h"
+#include "Text.h"
 
 //Forward definition of cross referenced class
 class Actor;

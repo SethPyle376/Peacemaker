@@ -42,6 +42,8 @@ public:
 	glm::mat4 getProjectionMatrix();
 	glm::mat4 getViewMatrix();
 
+	float currentFrames;
+
 private:
 	glm::vec3 position;
 	float horizontalAngle;

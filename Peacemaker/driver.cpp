@@ -12,11 +12,15 @@
 #include "Renderer.h"
 #include "Light.h"
 
+#include <ft2build.h>
+#include <freetype/freetype.h>
+
+
 using namespace std;
 
 int main()
 {
-	Renderer *renderer = new Renderer(1920, 1080);
+	Renderer *renderer = new Renderer(800, 600);
 
 	Scene *scene = new Scene();
 

@@ -7,6 +7,7 @@ static const float MAX_VERT_ANGLE = 85.0f;
 
 Camera::Camera()
 {
+	currentFrames = 0;
 	position = glm::vec3(0.0f, 0.0f, 1.0f);
 	horizontalAngle = 0;
 	verticalAngle = 0;
@@ -142,6 +143,8 @@ float Camera::update(GLFWwindow *window)
 	double currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - lastTime);
 	lastTime = glfwGetTime();
+
+	currentFrames = 1 / deltaTime;
 
 	// Compute time difference between current and last frame
 
