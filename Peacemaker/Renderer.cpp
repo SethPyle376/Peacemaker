@@ -2,6 +2,8 @@
 
 Renderer::Renderer(int width, int height)
 {
+	this->width = width;
+	this->height = height;
 	glfwInit();
 
 	window = glfwCreateWindow(width, height, "Peacemaker", NULL, NULL);
@@ -26,8 +28,10 @@ Renderer::Renderer(int width, int height)
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
 
-	text = new Text();
+	text = new Text(width, height);
+	rectangle = new Rectangle(0, 0, 0);
 	textShader = new ShaderProgram("res/shaders/textVertex.glsl", "res/shaders/textFragment.glsl");
+	rectangleShader = new ShaderProgram("res/shaders/rectangleVertex.glsl", "res/shaders/rectangleFragment.glsl");
 }
 
 void Renderer::update(Scene *scene)
@@ -35,7 +39,15 @@ void Renderer::update(Scene *scene)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	scene->update(window);
 
-	text->renderText(textShader, "THIS IS THE SAMPLE TEXT", 400.0f, 300.0f, 1.0f, glm::vec3(0.3, 0.7f, 0.9f));
+	tickCount++;
+
+	if (tickCount > 100)
+	{
+		fps = (int)scene->camera->currentFrames;
+		tickCount = 0;
+	}
+
+	text->renderText(textShader, std::to_string(fps) + " FPS", 0.0f, height - 48, 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	glfwPollEvents();
 	glfwSwapBuffers(window);

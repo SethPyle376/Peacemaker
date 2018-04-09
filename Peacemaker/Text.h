@@ -30,10 +30,12 @@ private:
 	FT_Library ft;
 	FT_Face face;
 
-	glm::mat4 projection;
+
 
 public:
-	Text();
+	Text(int width, int height);
+
+	glm::mat4 projection;
 
 	void renderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
 

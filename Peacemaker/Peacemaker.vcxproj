@@ -131,6 +131,7 @@
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="FastFourierTransform.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
@@ -145,9 +146,11 @@
     <ClInclude Include="Complex.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="FastFourierTransform.h" />
+    <ClInclude Include="Form.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderManager.h" />

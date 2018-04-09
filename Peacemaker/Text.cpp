@@ -1,6 +1,6 @@
 #include "Text.h"
 
-Text::Text()
+Text::Text(int width, int height)
 {
 	if (FT_Init_FreeType(&ft))
 		std::cout << "ERROR INITIALIZING FREETYPE LIBRARY" << std::endl;
@@ -9,7 +9,6 @@ Text::Text()
 		std::cout << "ERROR LOADING FONT" << std::endl;
 
 	FT_Set_Pixel_Sizes(face, 0, 48);
-
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -24,6 +23,7 @@ Text::Text()
 		GLuint texture;
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glTexImage2D(
 			GL_TEXTURE_2D,
 			0,
@@ -48,6 +48,7 @@ Text::Text()
 			face->glyph->advance.x
 		};
 		Characters.insert(std::pair<GLchar, Character>(c, character));
+		std::cout << character.textureID << std::endl;
 	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -58,7 +59,13 @@ Text::Text()
 
 	
 
-	projection = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
+	projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
+
+	for (int x = 0; x < 4; x++)
+		for (int y = 0; y < 4; y++)
+			std::cout << projection[x][y] << " ";
+
+	std::cout << std::endl;
 
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
@@ -74,6 +81,7 @@ Text::Text()
 void Text::renderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)
 {
 	glEnable(GL_BLEND);
+	glDisable(GL_CULL_FACE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	shader->start();
@@ -97,14 +105,14 @@ void Text::renderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloa
 		GLfloat h = ch.Size.y * scale;
 		// Update VBO for each character
 		GLfloat vertices[6][4] = {
-			{ xpos,     ypos + h,   0.0, 0.0 },
-		{ xpos,     ypos,       0.0, 1.0 },
-		{ xpos + w, ypos,       1.0, 1.0 },
-
-		{ xpos,     ypos + h,   0.0, 0.0 },
-		{ xpos + w, ypos,       1.0, 1.0 },
-		{ xpos + w, ypos + h,   1.0, 0.0 }
+			{ xpos,     (ypos + h),   0.0, 0.0 },
+		{ xpos,    ypos,       0.0, 1.0 },
+		{ (xpos + w), ypos,       1.0, 1.0 },
+		{ xpos,     (ypos + h),   0.0, 0.0 },
+		{ (xpos + w), ypos,       1.0, 1.0 },
+		{ (xpos + w), (ypos + h),   1.0, 0.0 }
 		};
+
 		// Render glyph texture over quad
 		glBindTexture(GL_TEXTURE_2D, ch.textureID);
 		// Update content of VBO memory
@@ -120,4 +128,5 @@ void Text::renderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloa
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDisable(GL_BLEND);
+	glEnable(GL_CULL_FACE);
 }

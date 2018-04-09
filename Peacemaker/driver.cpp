@@ -3,7 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <gtc\matrix_transform.hpp>
-
+#include <gtc\type_ptr.hpp>
+#include <map>
 
 #include "Camera.h"
 #include "ShaderProgram.h"
@@ -20,7 +21,7 @@ using namespace std;
 
 int main()
 {
-	Renderer *renderer = new Renderer(800, 600);
+	Renderer *renderer = new Renderer(1920, 1080);
 
 	Scene *scene = new Scene();
 
@@ -40,3 +41,6 @@ int main()
 	glfwTerminate();
 	return 0;
 }
+
+
+
