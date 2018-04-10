@@ -7,7 +7,7 @@
 #include "GLFW\glfw3.h"
 
 #include "Text.h"
-#include "Rectangle.h"
+
 
 
 class Renderer
@@ -17,7 +17,6 @@ private:
 	FT_Library ft;
 	FT_Face face;
 
-	Rectangle *rectangle;
 	Text *text;
 	ShaderProgram *textShader;
 	ShaderProgram *rectangleShader;

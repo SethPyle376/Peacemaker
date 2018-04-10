@@ -5,7 +5,7 @@ Text::Text(int width, int height)
 	if (FT_Init_FreeType(&ft))
 		std::cout << "ERROR INITIALIZING FREETYPE LIBRARY" << std::endl;
 
-	if (FT_New_Face(ft, "res/fonts/roboto.ttf", 0, &face))
+	if (FT_New_Face(ft, "res/fonts/arial.ttf", 0, &face))
 		std::cout << "ERROR LOADING FONT" << std::endl;
 
 	FT_Set_Pixel_Sizes(face, 0, 48);
@@ -48,7 +48,6 @@ Text::Text(int width, int height)
 			face->glyph->advance.x
 		};
 		Characters.insert(std::pair<GLchar, Character>(c, character));
-		std::cout << character.textureID << std::endl;
 	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -60,12 +59,6 @@ Text::Text(int width, int height)
 	
 
 	projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-
-	for (int x = 0; x < 4; x++)
-		for (int y = 0; y < 4; y++)
-			std::cout << projection[x][y] << " ";
-
-	std::cout << std::endl;
 
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);

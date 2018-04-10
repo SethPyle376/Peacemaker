@@ -164,6 +164,10 @@ float Camera::update(GLFWwindow *window)
 	{
 		offsetPosition(deltaTime * speed * -getRight());
 	}
+	if (glfwGetKey(window, GLFW_KEY_ENTER))
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
 
 	double mouseX, mouseY;
 	glfwGetCursorPos(window, &mouseX, &mouseY);

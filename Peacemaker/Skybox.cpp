@@ -1,6 +1,6 @@
 #include "Skybox.h"
 
-Skybox::Skybox(int scale)
+Skybox::Skybox(int scale, Scene *scene)
 {
 	for (int i = 0; i < 108; i++)
 	{
@@ -25,16 +25,26 @@ Skybox::Skybox(int scale)
 	faces.push_back("res/textures/skybox/bluecloud_ft.jpg");
 
 	cubemapTexture = loadCubemap(faces);
+	this->scene = scene;
+
+	shader = new ShaderProgram("res/shaders/skyboxVertex.glsl", "res/shaders/skyboxFragment.glsl");
 }
 
-void Skybox::draw(ShaderProgram shader)
+void Skybox::draw()
 {
+	shader->start();
+
+	shader->loadMatrix(glGetUniformLocation(shader->getProgramID(), "view"), scene->camera->getViewMatrix());
+	shader->loadMatrix(glGetUniformLocation(shader->getProgramID(), "projection"), scene->camera->getProjectionMatrix());
+
+
 	glDepthFunc(GL_LEQUAL);
 	glBindVertexArray(skyboxVAO);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
 	glDepthFunc(GL_LESS);
+	shader->stop();
 }
 
 GLuint Skybox::loadTexture(GLchar *path)

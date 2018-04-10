@@ -85,7 +85,6 @@ private:
 		{
 			this->processNode(node->mChildren[i], scene);
 		}
-		std::cout << "MESHES: " << meshes.size() << std::endl;
 	}
 
 	Mesh processMesh(aiMesh *mesh, const aiScene *scene)
@@ -198,7 +197,6 @@ inline GLint TextureFromFile(const char *path, string directory)
 	filename = /*directory + '/' +*/ filename;
 	GLuint textureID;
 	glGenTextures(1, &textureID);
-	std::cout << "MATERIAL TEXTURE ID: " << textureID << std::endl;
 
 	int width, height;
 

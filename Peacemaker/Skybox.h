@@ -5,6 +5,9 @@
 #include "GL\glew.h"
 #include "SOIL2\SOIL2.h"
 #include "ShaderProgram.h"
+#include "Scene.h"
+
+class Scene;
 
 class Skybox
 {
@@ -64,9 +67,12 @@ private:
 	GLuint skyboxVAO;
 	GLuint skyboxVBO;
 
-public:
-	Skybox(int scale);
+	ShaderProgram *shader;
+	Scene *scene;
 
-	void draw(ShaderProgram shader);
+public:
+	Skybox(int scale, Scene *scene);
+
+	void draw();
 
 };

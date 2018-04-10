@@ -47,8 +47,6 @@ public:
 		this->textures = textures;
 
 		this->setupMesh();
-		std::cout << textures.size() << " textures set up" << std::endl;
-
 	}
 
 	// Render the mesh

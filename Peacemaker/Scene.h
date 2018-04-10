@@ -5,9 +5,11 @@
 #include "Camera.h"
 #include "Light.h"
 #include "Text.h"
+#include "Skybox.h"
 
 //Forward definition of cross referenced class
 class Actor;
+class Skybox;
 
 class Scene
 {
@@ -24,5 +26,8 @@ public:
 
 	std::vector<Actor*> actors;
 	std::vector<Light*> lights;
+
+	Skybox *skybox;
+
 	Camera *camera;
 };

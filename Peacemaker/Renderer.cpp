@@ -8,6 +8,8 @@ Renderer::Renderer(int width, int height)
 
 	window = glfwCreateWindow(width, height, "Peacemaker", NULL, NULL);
 
+	//window = glfwCreateWindow(width, height, "Peacemaker", glfwGetPrimaryMonitor(), NULL);
+
 	if (!window)
 		std::cout << "ERROR OPENING OPENGL WINDOW" << std::endl;
 
@@ -23,13 +25,13 @@ Renderer::Renderer(int width, int height)
 	glfwPollEvents();
 	glfwSetCursorPos(window, width / 2, height / 2);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
 
 	text = new Text(width, height);
-	rectangle = new Rectangle(0, 0, 0);
 	textShader = new ShaderProgram("res/shaders/textVertex.glsl", "res/shaders/textFragment.glsl");
 	rectangleShader = new ShaderProgram("res/shaders/rectangleVertex.glsl", "res/shaders/rectangleFragment.glsl");
 }
