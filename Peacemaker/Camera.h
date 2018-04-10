@@ -1,8 +1,12 @@
 #pragma once
 
 #include <glm.hpp>
-#include <GLFW\glfw3.h>
+
 #include <iostream>
+
+#include "Scene.h"
+
+class Scene;
 
 class Camera
 {
@@ -32,7 +36,7 @@ public:
 	float getAspectRatio();
 	void setAspectRatio(float aspectRatio);
 
-	float update(GLFWwindow *window);
+	float update(GLFWwindow *window, Scene *scene);
 
 	glm::vec3 getForward();
 	glm::vec3 getRight();

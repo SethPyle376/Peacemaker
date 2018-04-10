@@ -29,6 +29,7 @@ public:
 	void loadVector4(GLuint location, glm::vec4 value);
 	void loadVec2(GLuint location, glm::vec2 value);
 	void loadMatrix(GLuint location, glm::mat4 value);
+	void loadBool(GLuint location, bool value);
 
 
 };

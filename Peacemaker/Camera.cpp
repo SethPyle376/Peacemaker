@@ -138,7 +138,7 @@ void Camera::normalizeAngles()
 		verticalAngle = -MAX_VERT_ANGLE;
 }
 
-float Camera::update(GLFWwindow *window)
+float Camera::update(GLFWwindow *window, Scene *scene)
 {
 	double currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - lastTime);
@@ -168,6 +168,33 @@ float Camera::update(GLFWwindow *window)
 	{
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
+
+	if (glfwGetKey(window, GLFW_KEY_W))
+	{
+		scene->lights[0]->offSetPosition(glm::vec3(0, speed * deltaTime, 0));
+	}
+	if (glfwGetKey(window, GLFW_KEY_S))
+	{
+		scene->lights[0]->offSetPosition(glm::vec3(0, -speed * deltaTime, 0));
+	}
+	if (glfwGetKey(window, GLFW_KEY_A))
+	{
+		scene->lights[0]->offSetPosition(glm::vec3(speed * deltaTime, 0, 0));
+	}
+	if (glfwGetKey(window, GLFW_KEY_D))
+	{
+		scene->lights[0]->offSetPosition(glm::vec3(-speed * deltaTime, 0, 0));
+	}
+	if (glfwGetKey(window, GLFW_KEY_Q))
+	{
+		scene->lights[0]->offSetPosition(glm::vec3(0, 0, speed * deltaTime));
+	}
+	if (glfwGetKey(window, GLFW_KEY_E))
+	{
+		scene->lights[0]->offSetPosition(glm::vec3(0, 0, -speed * deltaTime));
+	}
+
+
 
 	double mouseX, mouseY;
 	glfwGetCursorPos(window, &mouseX, &mouseY);

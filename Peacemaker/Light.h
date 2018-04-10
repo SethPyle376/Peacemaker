@@ -17,4 +17,9 @@ public:
 	{
 		return position;
 	}
+
+	void offSetPosition(glm::vec3 offset)
+	{
+		position += offset;
+	}
 };

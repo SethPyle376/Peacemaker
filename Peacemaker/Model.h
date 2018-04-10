@@ -185,7 +185,6 @@ private:
 				this->textures_loaded.push_back(texture); 
 			}
 		}
-
 		return textures;
 	}
 };

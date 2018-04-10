@@ -33,6 +33,11 @@ void ShaderProgram::loadMatrix(GLuint location, glm::mat4 value)
 	glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
 }
 
+void ShaderProgram::loadBool(GLuint location, bool value)
+{
+	glUniform1i(location, value);
+}
+
 void ShaderProgram::start()
 {
 	glUseProgram(programID);

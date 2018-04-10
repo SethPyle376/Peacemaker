@@ -13,7 +13,7 @@ void Scene::debugInput()
 
 void Scene::update(GLFWwindow *window)
 {
-	camera->update(window);
+	camera->update(window, this);
 
 	skybox->draw();
 

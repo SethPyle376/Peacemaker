@@ -19,13 +19,17 @@ private:
 	ShaderProgram *shader;
 	Scene *scene;
 
+	bool blinn;
+
 	glm::mat4 modelMatrix;
 
 	GLuint matrixID;
-	GLuint modelMatrixID;
+
 	GLuint viewMatrixID;
 	GLuint lightID;
-	
+
+	GLuint camPos;
+	GLuint blinnPos;
 
 public:
 	Actor(std::string modelLocation, std::string vertexLocation, std::string fragmentLocation, Scene *scene);

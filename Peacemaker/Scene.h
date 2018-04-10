@@ -10,6 +10,7 @@
 //Forward definition of cross referenced class
 class Actor;
 class Skybox;
+class Camera;
 
 class Scene
 {
