@@ -96,6 +96,8 @@ void Text::renderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloa
 
 		GLfloat w = ch.Size.x * scale;
 		GLfloat h = ch.Size.y * scale;
+
+		ypos -= h;
 		// Update VBO for each character
 		GLfloat vertices[6][4] = {
 			{ xpos,     (ypos + h),   0.0, 0.0 },

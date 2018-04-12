@@ -19,6 +19,4 @@ void Scene::update(GLFWwindow *window)
 
 	for (int i = 0; i < actors.size(); i++)
 		actors[i]->render();
-
-
 }
