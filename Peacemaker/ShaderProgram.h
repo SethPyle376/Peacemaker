@@ -11,8 +11,7 @@ class ShaderProgram
 {
 private:
 	int programID;
-	int vertexShaderID;
-	int fragmentShaderID;
+
 
 
 public:

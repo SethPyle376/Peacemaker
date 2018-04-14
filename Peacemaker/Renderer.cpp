@@ -31,16 +31,18 @@ Renderer::Renderer(int width, int height)
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
 
+	shadows = new ShadowFrameBuffer(width, height);
 	text = new Text(width, height);
 	textShader = new ShaderProgram("res/shaders/textVertex.glsl", "res/shaders/textFragment.glsl");
 	rectangleShader = new ShaderProgram("res/shaders/rectangleVertex.glsl", "res/shaders/rectangleFragment.glsl");
+	rectangle = new Rectangle();
+
+
 }
 
 void Renderer::update(Scene *scene)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scene->update(window);
-
 	tickCount++;
 
 	if (tickCount > 100)
@@ -48,6 +50,16 @@ void Renderer::update(Scene *scene)
 		fps = (int)scene->camera->currentFrames;
 		tickCount = 0;
 	}
+
+	shadows->bind();
+	scene->drawShadows();
+	shadows->unbind();
+
+	rectangle->setTexture(shadows->getShadowMap());
+
+	scene->update(window);
+
+	rectangle->draw(rectangleShader);
 
 	text->renderText(textShader, std::to_string(fps) + " FPS", 0, height, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 

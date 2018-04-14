@@ -17,6 +17,7 @@ class Actor
 private:
 	Model *model;
 	ShaderProgram *shader;
+	ShaderProgram *shadowShader;
 	Scene *scene;
 
 	bool blinn;
@@ -35,4 +36,6 @@ public:
 	Actor(std::string modelLocation, std::string vertexLocation, std::string fragmentLocation, Scene *scene);
 
 	virtual void render();
+
+	virtual void renderShadows();
 };

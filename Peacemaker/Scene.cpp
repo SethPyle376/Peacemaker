@@ -11,6 +11,12 @@ void Scene::debugInput()
 
 }
 
+void Scene::drawShadows()
+{
+	for (int i = 0; i < actors.size(); i++)
+		actors[i]->renderShadows();
+}
+
 void Scene::update(GLFWwindow *window)
 {
 	camera->update(window, this);

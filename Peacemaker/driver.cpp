@@ -25,9 +25,9 @@ int main()
 
 	Scene *scene = new Scene();
 
-	Light *light = new Light(glm::vec3(0, 50, 50));
+	Light *light = new Light(glm::vec3(0, 150, 0));
 
-	Actor *sponza = new Actor("res/models/sponza.obj", "res/shaders/vertex.glsl", "res/shaders/fragment.glsl", scene);
+	Actor *sponza = new Actor("res/models/islandsmall.obj", "res/shaders/vertex.glsl", "res/shaders/fragment.glsl", scene);
 
 	scene->lights.push_back(light);
 	scene->actors.push_back(sponza);

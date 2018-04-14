@@ -5,6 +5,7 @@ Actor::Actor(std::string modelLocation, std::string vertexLocation, std::string 
 	blinn = true;
 	this->model = new Model((GLchar*)modelLocation.c_str());
 	shader = new ShaderProgram(vertexLocation, fragmentLocation);
+	shadowShader = new ShaderProgram("res/shaders/shadowVertex.glsl", "res/shaders/shadowFragment.glsl");
 	this->scene = scene;
 
 	modelMatrix = glm::mat4(1.0f);
@@ -32,4 +33,13 @@ void Actor::render()
 	model->Draw(shader);
 
 	shader->stop();
+}
+
+void Actor::renderShadows()
+{
+	shadowShader->start();
+	shadowShader->loadMatrix(glGetUniformLocation(shadowShader->getProgramID(), "projection"), scene->camera->getProjectionMatrix());
+	shadowShader->loadMatrix(glGetUniformLocation(shadowShader->getProgramID(), "view"), scene->camera->getViewMatrix());
+	model->Draw(shadowShader);
+	shadowShader->stop();
 }

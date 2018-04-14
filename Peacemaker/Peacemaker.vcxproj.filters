@@ -60,6 +60,12 @@
     <ClCompile Include="Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShadowFrameBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderManager.h">
@@ -106,6 +112,15 @@
     </ClInclude>
     <ClInclude Include="Text.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowFrameBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

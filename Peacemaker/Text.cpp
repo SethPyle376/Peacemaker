@@ -76,6 +76,7 @@ void Text::renderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloa
 	glEnable(GL_BLEND);
 	glDisable(GL_CULL_FACE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_DEPTH_TEST);
 
 	shader->start();
 
@@ -122,6 +123,8 @@ void Text::renderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloa
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+
+	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 	glEnable(GL_CULL_FACE);
 }

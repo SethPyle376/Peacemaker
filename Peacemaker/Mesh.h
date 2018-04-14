@@ -81,16 +81,31 @@ public:
 			glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
 		}
 
-		// Draw mesh
 		glBindVertexArray(this->VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+		// Draw mesh
 		glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0);
+
 		glBindVertexArray(0);
+
 
 		for (GLuint i = 0; i < this->textures.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
+	}
+
+	void drawShadow()
+	{
+		glBindVertexArray(VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)0);
+		glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0);
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
 	}
 
 private:
@@ -116,6 +131,7 @@ private:
 
 		// Set the vertex attribute pointers
 		// Vertex Positions
+
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)0);
 		// Vertex Normals
@@ -124,6 +140,8 @@ private:
 		// Vertex Texture Coords
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, TexCoords));
+
+		
 
 		glBindVertexArray(0);
 	}

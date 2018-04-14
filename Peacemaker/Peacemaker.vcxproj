@@ -131,10 +131,12 @@
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="FastFourierTransform.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="ShadowFrameBuffer.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Text.cpp" />
   </ItemGroup>
@@ -148,6 +150,9 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="ShadowFrameBuffer.h" />
+    <ClInclude Include="UIElement.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderManager.h" />

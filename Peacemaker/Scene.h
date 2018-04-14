@@ -25,6 +25,8 @@ public:
 	Scene();
 	void update(GLFWwindow *window);
 
+	void drawShadows();
+
 	std::vector<Actor*> actors;
 	std::vector<Light*> lights;
 
