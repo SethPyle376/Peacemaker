@@ -3,7 +3,7 @@
 Scene::Scene()
 {
 	camera = new Camera();
-	skybox = new Skybox(1000, this);
+	skybox = new Skybox(2000, this);
 }
 
 void Scene::debugInput()
@@ -17,12 +17,13 @@ void Scene::drawShadows()
 		actors[i]->renderShadows();
 }
 
-void Scene::update(GLFWwindow *window)
+void Scene::update(GLFWwindow *window, GLuint shadowMap)
 {
+	skybox->draw();
 	camera->update(window, this);
 
-	skybox->draw();
-
 	for (int i = 0; i < actors.size(); i++)
-		actors[i]->render();
+	{
+		actors[i]->render(shadowMap);
+	}
 }

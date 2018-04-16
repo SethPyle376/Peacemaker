@@ -8,6 +8,7 @@ Skybox::Skybox(int scale, Scene *scene)
 	}
 
 	glGenVertexArrays(1, &skyboxVAO);
+	
 	glGenBuffers(1, &skyboxVBO);
 	glBindVertexArray(skyboxVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
@@ -32,19 +33,20 @@ Skybox::Skybox(int scale, Scene *scene)
 
 void Skybox::draw()
 {
+	glDepthFunc(GL_LEQUAL);
 	shader->start();
 
 	shader->loadMatrix(glGetUniformLocation(shader->getProgramID(), "view"), scene->camera->getViewMatrix());
 	shader->loadMatrix(glGetUniformLocation(shader->getProgramID(), "projection"), scene->camera->getProjectionMatrix());
 
-
-	glDepthFunc(GL_LEQUAL);
 	glBindVertexArray(skyboxVAO);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
 	glDepthFunc(GL_LESS);
 	shader->stop();
+
 }
 
 GLuint Skybox::loadTexture(GLchar *path)

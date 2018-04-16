@@ -29,7 +29,7 @@ Renderer::Renderer(int width, int height)
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
 	shadows = new ShadowFrameBuffer(width, height);
 	text = new Text(width, height);
@@ -55,11 +55,9 @@ void Renderer::update(Scene *scene)
 	scene->drawShadows();
 	shadows->unbind();
 
-	rectangle->setTexture(shadows->getShadowMap());
+	scene->update(window, shadows->getShadowMap());
 
-	scene->update(window);
 
-	rectangle->draw(rectangleShader);
 
 	text->renderText(textShader, std::to_string(fps) + " FPS", 0, height, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 

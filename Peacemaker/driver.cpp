@@ -25,7 +25,7 @@ int main()
 
 	Scene *scene = new Scene();
 
-	Light *light = new Light(glm::vec3(0, 150, 0));
+	Light *light = new Light(glm::vec3(2.0f, 3.0f, 4.0f));
 
 	Actor *sponza = new Actor("res/models/islandsmall.obj", "res/shaders/vertex.glsl", "res/shaders/fragment.glsl", scene);
 

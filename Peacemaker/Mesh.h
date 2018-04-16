@@ -77,8 +77,12 @@ public:
 			number = ss.str();
 			// Now set the sampler to the correct texture unit
 			glUniform1i(glGetUniformLocation(shader->getProgramID(), (name + number).c_str()), i);
+			glUniform1i(glGetUniformLocation(shader->getProgramID(), "shadowMap"), 1);
 			// And finally bind the texture
 			glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
+
+			if (i == 1)
+				std::cout << "BOUND TEXTURE AT 1" << std::endl;
 		}
 
 		glBindVertexArray(this->VAO);

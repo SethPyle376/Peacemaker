@@ -23,7 +23,7 @@ private:
 
 public:
 	Scene();
-	void update(GLFWwindow *window);
+	void update(GLFWwindow *window, GLuint shadowMap);
 
 	void drawShadows();
 

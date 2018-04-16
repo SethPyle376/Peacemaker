@@ -12,25 +12,29 @@ Actor::Actor(std::string modelLocation, std::string vertexLocation, std::string 
 
 	matrixID = glGetUniformLocation(shader->getProgramID(), "projection");
 	viewMatrixID = glGetUniformLocation(shader->getProgramID(), "view");
+	modelMatrixID = glGetUniformLocation(shader->getProgramID(), "model");
 
-	lightID = glGetUniformLocation(shader->getProgramID(), "lightPos");
-
-	camPos = glGetUniformLocation(shader->getProgramID(), "viewPos");
-	blinnPos = glGetUniformLocation(shader->getProgramID(), "blinn");
-
+	lightID = glGetUniformLocation(shader->getProgramID(), "lightSpaceMatrix");
 }
 
-void Actor::render()
+void Actor::render(GLuint shadowMap)
 {
 	shader->start();
 	shader->loadMatrix(matrixID, scene->camera->getProjectionMatrix());
 	shader->loadMatrix(viewMatrixID, scene->camera->getViewMatrix());
+	shader->loadMatrix(modelMatrixID, glm::mat4(1.0f));
 
-	shader->loadVector(lightID, scene->lights[0]->getPosition());
-	shader->loadVector(camPos, scene->camera->getPosition());
-	shader->loadBool(blinnPos, blinn);
+	shader->loadMatrix(lightID, scene->lights[0]->lightSpaceMatrix);
+	shader->loadVector(glGetUniformLocation(shader->getProgramID(), "lightPos"), scene->lights[0]->getPosition());
+	shader->loadVector(glGetUniformLocation(shader->getProgramID(), "viewPos"), scene->camera->getPosition());
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, shadowMap);
 
 	model->Draw(shader);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	shader->stop();
 }
@@ -38,8 +42,8 @@ void Actor::render()
 void Actor::renderShadows()
 {
 	shadowShader->start();
-	shadowShader->loadMatrix(glGetUniformLocation(shadowShader->getProgramID(), "projection"), scene->camera->getProjectionMatrix());
-	shadowShader->loadMatrix(glGetUniformLocation(shadowShader->getProgramID(), "view"), scene->camera->getViewMatrix());
+	shadowShader->loadMatrix(glGetUniformLocation(shadowShader->getProgramID(), "lightSpaceMatrix"), scene->lights[0]->lightSpaceMatrix);
+	shadowShader->loadMatrix(glGetUniformLocation(shadowShader->getProgramID(), "model"), glm::mat4(1.0f));
 	model->Draw(shadowShader);
 	shadowShader->stop();
 }

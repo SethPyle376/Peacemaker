@@ -28,6 +28,7 @@ private:
 
 	GLuint viewMatrixID;
 	GLuint lightID;
+	GLuint modelMatrixID;
 
 	GLuint camPos;
 	GLuint blinnPos;
@@ -35,7 +36,7 @@ private:
 public:
 	Actor(std::string modelLocation, std::string vertexLocation, std::string fragmentLocation, Scene *scene);
 
-	virtual void render();
+	virtual void render(GLuint shadowMap);
 
 	virtual void renderShadows();
 };

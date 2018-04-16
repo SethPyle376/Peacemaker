@@ -7,27 +7,23 @@ ShadowFrameBuffer::ShadowFrameBuffer(int width, int height)
 
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-	glGenTextures(1, &color);
-	glBindTexture(GL_TEXTURE_2D, color);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, color, 0);
 	
-
 	glGenTextures(1, &shadowMap);
 	glBindTexture(GL_TEXTURE_2D, shadowMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width * 4, height * 4, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowMap, 0);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowMap, 0);
+
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		std::cout << "ERROR: SHADOW FRAMEBUFFER NOT INITIALIZED" << std::endl;
@@ -39,13 +35,15 @@ void ShadowFrameBuffer::bind()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, width * 4, height * 4);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_ALPHA_TEST);
+	glCullFace(GL_FRONT);
 }
 
 void ShadowFrameBuffer::unbind()
 {
+	glCullFace(GL_BACK);
 	glEnable(GL_ALPHA_TEST);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, 1920, 1080);
@@ -53,7 +51,7 @@ void ShadowFrameBuffer::unbind()
 
 GLuint ShadowFrameBuffer::getShadowMap()
 {
-	return color;
+	return shadowMap;
 }
 
 ShadowFrameBuffer::~ShadowFrameBuffer()
