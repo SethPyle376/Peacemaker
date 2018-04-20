@@ -73,7 +73,7 @@
     <LibraryPath>D:\ForgottenServer\Peacemaker\libs\glfw-3.2.1.bin.WIN64\lib-vc2015;D:\ForgottenServer\Peacemaker\libs\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>A:\Users\sethp\Desktop\Peacemaker\Water-Rendering\libs\freetype;$(SolutionDir)\libs\glm\glm\;$(SolutionDir)\libs\glfw-3.2.1\include;$(SolutionDir)\libs\glew-2.1.0\include;$(IncludePath)</IncludePath>
+    <IncludePath>A:\Users\sethp\Desktop\Peacemaker\Water-Rendering\libs\fastnoise;A:\Users\sethp\Desktop\Peacemaker\Water-Rendering\libs\freetype;$(SolutionDir)\libs\glm\glm\;$(SolutionDir)\libs\glfw-3.2.1\include;$(SolutionDir)\libs\glew-2.1.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>A:\Users\sethp\Desktop\Peacemaker\Water-Rendering\libs\freetype;$(SolutionDir)\libs\assimp;$(SolutionDir)\libs\glew-2.1.0\lib\Release\x64;$(SolutionDir)\libs\glfw-3.2.1.bin.WIN64\lib-vc2015;$(SolutionDir)\libs\SOIL;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -131,6 +131,7 @@
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="FastFourierTransform.cpp" />
+    <ClCompile Include="FastNoise.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ShadowFrameBuffer.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +154,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="ShadowFrameBuffer.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />

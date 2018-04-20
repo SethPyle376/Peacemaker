@@ -19,6 +19,12 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{9ffeb245-c5c2-4d93-8ef6-1a975e580c26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{8fc08340-772c-4d63-a489-12f2644bec8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{27caf3dd-3550-41ab-a86a-3cbe9cbbb116}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="driver.cpp">
@@ -65,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="Rectangle.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="FastNoise.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Rectangle.h">
       <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

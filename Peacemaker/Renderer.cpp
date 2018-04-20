@@ -25,7 +25,7 @@ Renderer::Renderer(int width, int height)
 	glfwPollEvents();
 	glfwSetCursorPos(window, width / 2, height / 2);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
@@ -51,13 +51,13 @@ void Renderer::update(Scene *scene)
 		tickCount = 0;
 	}
 
-	shadows->bind();
-	scene->drawShadows();
-	shadows->unbind();
+	//shadows->bind();
+	//scene->drawShadows();
+	//shadows->unbind();
 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	scene->update(window, shadows->getShadowMap());
-
-
+	glPolygonMode(GL_FRONT, GL_FILL);
 
 	text->renderText(textShader, std::to_string(fps) + " FPS", 0, height, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 

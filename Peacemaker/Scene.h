@@ -6,11 +6,13 @@
 #include "Light.h"
 #include "Text.h"
 #include "Skybox.h"
+#include "Terrain.h"
 
 //Forward definition of cross referenced class
 class Actor;
 class Skybox;
 class Camera;
+class Terrain;
 
 class Scene
 {
@@ -19,6 +21,8 @@ private:
 	float deltaTime;
 
 	void debugInput();
+
+	Terrain *terrain;
 
 
 public:
