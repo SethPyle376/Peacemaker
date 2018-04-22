@@ -5,7 +5,7 @@ Scene::Scene()
 	camera = new Camera();
 	skybox = new Skybox(2000, this);
 
-	terrain = new Terrain(this);
+	terrain = new Terrain(this, 300);
 }
 
 void Scene::debugInput()

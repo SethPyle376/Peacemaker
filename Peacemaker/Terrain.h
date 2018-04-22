@@ -35,7 +35,7 @@ private:
 	Scene *scene;
 
 public:
-	Terrain(Scene *scene);
+	Terrain(Scene *scene, int dimension);
 
 	void render();
 

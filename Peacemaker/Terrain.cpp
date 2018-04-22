@@ -1,26 +1,46 @@
 #include "Terrain.h"
 
-Terrain::Terrain(Scene *scene)
+Terrain::Terrain(Scene *scene, int dimension)
 {
 	this->scene = scene;
 
 	shader = new ShaderProgram("res/shaders/terrainVertex.glsl", "res/shaders/terrainFragment.glsl");
 
-	noise = new FastNoise(1337);
-	noise->SetFrequency(0.05f);
-
+	noise = new FastNoise(3760);
+	
+	int amplitude = 80;
 	int count = 0;
+	
 
 	float minimum = 100;
 	float maximum = 0;
 	float mean = 0;
 
-	for (int x = 0; x < 200; x++)
+	float totalDif;
+
+	float bottom = 0;
+	float middle = 0;
+	float top = 0;
+
+	bottom = (-(1.0f / 2.0f) * amplitude) + (1.0f / 3.0f) * amplitude;
+
+	middle = bottom + (1.0f / 3.0f) * amplitude;
+
+	top = middle + (1.0f / 3.0f) * amplitude;
+
+	std::cout << "Top: " << top << std::endl;
+	std::cout << "Middle: " << middle << std::endl;
+	std::cout << "Bottom: " << bottom << std::endl;
+
+	for (int x = 0; x < dimension; x++)
 	{
-		for (int y = 0; y < 200; y++)
+		for (int y = 0; y < dimension; y++)
 		{
+			noise->SetFrequency(0.008f);
+			noise->SetFractalOctaves(10);
+			int biome = 0;
 			TerrainVertex vertex;
-			vertex.position = glm::vec3(x - 100, noise->GetPerlinFractal(x, y) * 10, y - 100);
+			vertex.position = glm::vec3((x - (dimension / 2)) * 2, noise->GetPerlinFractal(x, y) * amplitude, (y - (dimension / 2)) * 2);
 
 			if (vertex.position.y > maximum)
 				maximum = vertex.position.y;
@@ -31,12 +51,43 @@ Terrain::Terrain(Scene *scene)
 			mean += vertex.position.y;
 			count++;
 
-			if (vertex.position.y > 1)
+			if (vertex.position.y > middle)
+			{
 				vertex.color = glm::vec3(0.0, 0.0, 1.0);
-			else if (vertex.position.y < -2)
+				biome = 0;
+			}
+			else if (vertex.position.y < bottom)
+			{
 				vertex.color = glm::vec3(1.0, 0.0, 0.0);
+				biome = 1;
+			}
 			else
+			{
 				vertex.color = glm::vec3(0.0, 1.0, 0.0);
+				biome = 2;
+			}
+
+			/*(switch (biome)
+			{
+			case 0:
+				noise->SetFrequency(0.07f);
+				amplitude = 20;
+				break;
+
+			case 1:
+				noise->SetFrequency(0.03f);
+				amplitude = 10;
+				break;
+
+			case 2:
+				noise->SetFrequency(0.01f);
+				amplitude = 1;
+				break;
+			}
+
+			
+
+			vertex.position.y = abs(noise->GetPerlinFractal(vertex.position.x, vertex.position.z) * amplitude / (biome + 1));*/
 
 			vertices.push_back(vertex);
 		}
@@ -48,18 +99,18 @@ Terrain::Terrain(Scene *scene)
 	std::cout << "TERRAIN MINIMUM: " << minimum << std::endl;
 	std::cout << "TERRAIN MEAN: " << mean << std::endl;
 
-	for (int x = 0; x < 199; x++)
+	for (int x = 0; x < dimension - 1; x++)
 	{
-		for (int y = 0; y < 199; y++)
+		for (int y = 0; y < dimension - 1; y++)
 		{
 			
-			indices.push_back(((x + 1) * 200) + y + 1);
-			indices.push_back(((x + 1) * 200) + y);
-			indices.push_back((x * 200) + y);
+			indices.push_back(((x + 1) * dimension) + y + 1);
+			indices.push_back(((x + 1) * dimension) + y);
+			indices.push_back((x * dimension) + y);
 
-			indices.push_back((x * 200) + y + 1);
-			indices.push_back(((x + 1) * 200) + y + 1);
-			indices.push_back((x * 200) + y);
+			indices.push_back((x * dimension) + y + 1);
+			indices.push_back(((x + 1) * dimension) + y + 1);
+			indices.push_back((x * dimension) + y);
 
 		}
 	}
