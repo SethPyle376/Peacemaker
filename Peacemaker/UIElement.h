@@ -1,17 +1,22 @@
 #pragma once
 
+#include <vector>
 #include <glm.hpp>
 #include <GL\glew.h>
 
 class UIElement
 {
-private:
+
+protected:
 	glm::vec2 position;
 	glm::vec2 size;
+
+	UIElement *parent;
+	std::vector<UIElement*> children;
 
 
 public:
 	UIElement(glm::vec2 position, glm::vec2 size);
-	void offsetPosition(glm::vec2 update);
-	void render();
+	virtual void offsetPosition(glm::vec2 update) = 0;
+	virtual void render() = 0;
 };

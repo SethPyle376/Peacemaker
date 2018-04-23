@@ -27,12 +27,14 @@ private:
 	int tickCount;
 	int fps;
 
-	int width;
-	int height;
+	
 	
 
 public:
 	Renderer(int width, int height);
+
+	int width;
+	int height;
 
 	void update(Scene *scene);
 

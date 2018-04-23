@@ -7,6 +7,7 @@
 #include "Text.h"
 #include "Skybox.h"
 #include "Terrain.h"
+#include "Frame.h"
 
 //Forward definition of cross referenced class
 class Actor;
@@ -24,9 +25,15 @@ private:
 
 	Terrain *terrain;
 
+	Rectangle *rectangle;
+
+	Frame *frame;
+
+	glm::vec2 resolution;
+
 
 public:
-	Scene();
+	Scene(glm::vec2 resolution);
 	void update(GLFWwindow *window, GLuint shadowMap);
 
 	void drawShadows();

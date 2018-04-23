@@ -23,7 +23,7 @@ int main()
 {
 	Renderer *renderer = new Renderer(1920, 1080);
 
-	Scene *scene = new Scene();
+	Scene *scene = new Scene(glm::vec2(renderer->width, renderer->height));
 
 	Light *light = new Light(glm::vec3(2.0f, 3.0f, 4.0f));
 

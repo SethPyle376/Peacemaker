@@ -34,8 +34,7 @@ Renderer::Renderer(int width, int height)
 	shadows = new ShadowFrameBuffer(width, height);
 	text = new Text(width, height);
 	textShader = new ShaderProgram("res/shaders/textVertex.glsl", "res/shaders/textFragment.glsl");
-	rectangleShader = new ShaderProgram("res/shaders/rectangleVertex.glsl", "res/shaders/rectangleFragment.glsl");
-	rectangle = new Rectangle();
+
 
 
 }
