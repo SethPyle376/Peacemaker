@@ -24,6 +24,8 @@ private:
 	std::vector<TerrainVertex> vertices;
 	std::vector<GLuint> indices;
 
+	
+
 	FastNoise *noise;
 
 	GLuint vbo;
@@ -37,7 +39,10 @@ private:
 public:
 	Terrain(Scene *scene, int dimension);
 
+	float seed;
+
 	void render();
+	void reload();
 
 	
 };

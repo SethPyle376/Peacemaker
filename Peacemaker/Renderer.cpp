@@ -38,7 +38,7 @@ Renderer::Renderer(int width, int height)
 
 void Renderer::update(Scene *scene)
 {
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	tickCount++;
 
 	if (tickCount > 100)
@@ -54,8 +54,6 @@ void Renderer::update(Scene *scene)
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	scene->update(window, shadows->getShadowMap());
 	glPolygonMode(GL_FRONT, GL_FILL);
-
-	text->renderText(textShader, std::to_string(fps) + " FPS", 0, height, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	glfwPollEvents();
 	glfwSwapBuffers(window);

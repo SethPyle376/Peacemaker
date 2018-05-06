@@ -9,11 +9,14 @@
 #include "Terrain.h"
 #include "Frame.h"
 
+#include "DemoUI.h"
+
 //Forward definition of cross referenced class
 class Actor;
 class Skybox;
 class Camera;
 class Terrain;
+class DemoUI;
 
 class Scene
 {
@@ -23,7 +26,9 @@ private:
 
 	void debugInput();
 
-	Terrain *terrain;
+	DemoUI *controlPanel;
+
+	
 
 	Rectangle *rectangle;
 
@@ -33,10 +38,12 @@ private:
 
 
 public:
-	Scene(glm::vec2 resolution);
+	Scene(glm::vec2 resolution, GLFWwindow *window);
 	void update(GLFWwindow *window, GLuint shadowMap);
 
 	void drawShadows();
+
+	Terrain *terrain;
 
 	std::vector<Actor*> actors;
 	std::vector<Light*> lights;

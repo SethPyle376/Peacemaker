@@ -13,8 +13,8 @@
 #include "Renderer.h"
 #include "Light.h"
 
-#include "imgui.h"
-#include "imgui_impl_glfw_gl3.h"
+//#include "imgui.h"
+//#include "imgui_impl_glfw_gl3.h"
 
 #include <ft2build.h>
 #include <freetype/freetype.h>
@@ -26,7 +26,7 @@ int main()
 {
 	Renderer *renderer = new Renderer(1920, 1080);
 
-	Scene *scene = new Scene(glm::vec2(renderer->width, renderer->height));
+	Scene *scene = new Scene(glm::vec2(renderer->width, renderer->height), renderer->getWindow());
 
 	Light *light = new Light(glm::vec3(2.0f, 3.0f, 4.0f));
 
@@ -35,7 +35,7 @@ int main()
 	scene->lights.push_back(light);
 	scene->actors.push_back(sponza);
 
-	IMGUI_CHECKVERSION();
+	/*IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui_ImplGlfwGL3_Init(renderer->getWindow(), true);
@@ -43,13 +43,12 @@ int main()
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45, 0.55f, 0.60f, 1.00f);
+	ImVec4 clear_color = ImVec4(0.45, 0.55f, 0.60f, 1.00f);*/
 
 
 	while (!glfwWindowShouldClose(renderer->getWindow()))
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		ImGui_ImplGlfwGL3_NewFrame();
+		/*ImGui_ImplGlfwGL3_NewFrame();
 		static float f = 0.0f;
 		static int counter = 0;
 
@@ -71,7 +70,7 @@ int main()
 		glfwGetFramebufferSize(renderer->getWindow(), &display_w, &display_h);
 		glViewport(0, 0, display_w, display_h);
 		ImGui::Render();
-		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());*/
 
 		renderer->update(scene);
 		
