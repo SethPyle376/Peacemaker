@@ -17,6 +17,7 @@ Camera::Camera()
 	aspectRatio = (4.0f / 3.0f);
 	speed = 10.0f;
 	lastTime = 0;
+	clutch = false;
 }
 
 glm::vec3 Camera::getPosition()
@@ -167,6 +168,7 @@ float Camera::update(GLFWwindow *window, Scene *scene)
 	if (glfwGetKey(window, GLFW_KEY_ENTER))
 	{
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		clutch = !clutch;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_W))
@@ -194,11 +196,14 @@ float Camera::update(GLFWwindow *window, Scene *scene)
 		scene->lights[0]->offSetPosition(glm::vec3(0, 0, -speed * deltaTime));
 	}
 
-
-
 	double mouseX, mouseY;
 	glfwGetCursorPos(window, &mouseX, &mouseY);
-	offsetOrientation(0.1f * (float)mouseY, 0.1f * (float)mouseX);
-	glfwSetCursorPos(window, 0, 0);
+
+	if (!clutch)
+		offsetOrientation(0.1f * (float)mouseY, 0.1f * (float)mouseX);
+
+	if (!clutch)
+		glfwSetCursorPos(window, 0, 0);
+
 	return deltaTime;
 }

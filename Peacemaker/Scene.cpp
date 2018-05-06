@@ -25,9 +25,8 @@ void Scene::drawShadows()
 
 void Scene::update(GLFWwindow *window, GLuint shadowMap)
 {
-	skybox->draw();
 	camera->update(window, this);
-
+	skybox->draw();
 	//for (int i = 0; i < actors.size(); i++)
 	//{
 		//actors[i]->render(shadowMap);

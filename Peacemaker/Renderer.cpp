@@ -34,14 +34,11 @@ Renderer::Renderer(int width, int height)
 	shadows = new ShadowFrameBuffer(width, height);
 	text = new Text(width, height);
 	textShader = new ShaderProgram("res/shaders/textVertex.glsl", "res/shaders/textFragment.glsl");
-
-
-
 }
 
 void Renderer::update(Scene *scene)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	tickCount++;
 
 	if (tickCount > 100)

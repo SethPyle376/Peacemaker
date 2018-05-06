@@ -68,3 +68,18 @@ void Rectangle::setTexture(GLuint texture)
 {
 	this->texture = texture;
 }
+
+void Rectangle::offsetPosition(glm::vec2 position)
+{
+
+}
+
+void Rectangle::updateSize(glm::vec2 size)
+{
+
+}
+
+void Rectangle::updateColor(glm::vec3 color)
+{
+	this->color = color;
+}

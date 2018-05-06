@@ -25,5 +25,10 @@ public:
 
 	void setTexture(GLuint texture);
 
+
+	void offsetPosition(glm::vec2 position);
+	void updateSize(glm::vec2 size);
+	void updateColor(glm::vec3 color);
+
 	void draw();
 };

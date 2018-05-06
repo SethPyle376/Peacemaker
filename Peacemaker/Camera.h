@@ -58,6 +58,7 @@ private:
 	float aspectRatio;
 
 	float speed;
+	bool clutch;
 
 	void normalizeAngles();
 	double lastTime;
