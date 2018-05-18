@@ -145,6 +145,7 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ShadowFrameBuffer.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="SkySphere.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIElement.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="ShadowFrameBuffer.h" />
+    <ClInclude Include="SkySphere.h" />
     <ClInclude Include="stb_rect_pack.h" />
     <ClInclude Include="stb_textedit.h" />
     <ClInclude Include="stb_truetype.h" />

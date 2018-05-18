@@ -13,7 +13,7 @@ Camera::Camera()
 	verticalAngle = 0;
 	fov = 50.0f;
 	nearPlane = 0.01f;
-	farPlane = 1000.0f;
+	farPlane = 1500.0f;
 	aspectRatio = (4.0f / 3.0f);
 	speed = 10.0f;
 	lastTime = 0;

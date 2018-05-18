@@ -30,10 +30,12 @@ int main()
 
 	Light *light = new Light(glm::vec3(2.0f, 3.0f, 4.0f));
 
-	Actor *sponza = new Actor("res/models/islandsmall.obj", "res/shaders/vertex.glsl", "res/shaders/fragment.glsl", scene);
+	//Actor *sponza = new Actor("res/models/islandsmall.obj", "res/shaders/vertex.glsl", "res/shaders/fragment.glsl", scene);
+	Actor *tree = new Actor("res/models/lowpolytree.obj", "res/shaders/vertex.glsl", "res/shaders/basicFrag.glsl", scene);
 
 	scene->lights.push_back(light);
-	scene->actors.push_back(sponza);
+	//scene->actors.push_back(sponza);
+	scene->actors.push_back(tree);
 
 	/*IMGUI_CHECKVERSION();
 	ImGui::CreateContext();

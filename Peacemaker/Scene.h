@@ -8,6 +8,7 @@
 #include "Skybox.h"
 #include "Terrain.h"
 #include "Frame.h"
+#include "SkySphere.h"
 
 #include "DemoUI.h"
 
@@ -17,6 +18,7 @@ class Skybox;
 class Camera;
 class Terrain;
 class DemoUI;
+class SkySphere;
 
 class Scene
 {
@@ -28,7 +30,7 @@ private:
 
 	DemoUI *controlPanel;
 
-	
+	SkySphere *sky;
 
 	Rectangle *rectangle;
 

@@ -11,6 +11,8 @@ Scene::Scene(glm::vec2 resolution, GLFWwindow *window)
 
 	terrain = new Terrain(this, 300);
 
+	sky = new SkySphere(1, 6, this);
+
 	controlPanel = new DemoUI(this, window);
 }
 
@@ -30,10 +32,12 @@ void Scene::update(GLFWwindow *window, GLuint shadowMap)
 	camera->update(window, this);
 	skybox->draw();
 
-	//for (int i = 0; i < actors.size(); i++)
-	//{
-		//actors[i]->render(shadowMap);
-	//}
+	for (int i = 0; i < actors.size(); i++)
+	{
+		actors[i]->render(shadowMap);
+	}
+
+	sky->render();
 
 	terrain->render();
 

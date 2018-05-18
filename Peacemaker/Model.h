@@ -101,7 +101,7 @@ private:
 			glm::vec3 vector;
 
 			vector.x = mesh->mVertices[i].x * 0.1f;
-			vector.y = mesh->mVertices[i].y * 0.1f;
+			vector.y = mesh->mVertices[i].y * 0.1f + 10;
 			vector.z = mesh->mVertices[i].z * 0.1f;
 			vertex.Position = vector;
 

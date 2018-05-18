@@ -32,6 +32,8 @@ private:
 	GLuint vao;
 	GLuint ebo;
 
+	int dimension;
+
 	ShaderProgram *shader;
 
 	Scene *scene;

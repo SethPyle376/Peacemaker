@@ -8,8 +8,11 @@ Terrain::Terrain(Scene *scene, int dimension)
 
 	noise = new FastNoise(3760);
 	
-	int amplitude = 80;
+	int amplitude = 60;
 	int count = 0;
+	int size = 5;
+
+	this->dimension = dimension;
 	
 
 	float minimum = 100;
@@ -19,6 +22,7 @@ Terrain::Terrain(Scene *scene, int dimension)
 	float totalDif;
 
 	float bottom = 0;
+	float coast = 2.5f;
 	float middle = 0;
 	float top = 0;
 
@@ -36,11 +40,11 @@ Terrain::Terrain(Scene *scene, int dimension)
 	{
 		for (int y = 0; y < dimension; y++)
 		{
-			noise->SetFrequency(0.008f);
-			noise->SetFractalOctaves(10);
+			noise->SetFrequency(0.00525f);
+			noise->SetFractalOctaves(7);
 			int biome = 0;
 			TerrainVertex vertex;
-			vertex.position = glm::vec3((x - (dimension / 2)) * 2, noise->GetPerlinFractal(x, y) * amplitude, (y - (dimension / 2)) * 2);
+			vertex.position = glm::vec3((x - (dimension / 2)), noise->GetPerlinFractal(x, y) * amplitude, (y - (dimension / 2)));
 
 			if (vertex.position.y > maximum)
 				maximum = vertex.position.y;
@@ -67,27 +71,10 @@ Terrain::Terrain(Scene *scene, int dimension)
 				biome = 2;
 			}
 
-			/*(switch (biome)
+			if (vertex.position.y > bottom && (vertex.position.y < bottom + coast))
 			{
-			case 0:
-				noise->SetFrequency(0.07f);
-				amplitude = 20;
-				break;
-
-			case 1:
-				noise->SetFrequency(0.03f);
-				amplitude = 10;
-				break;
-
-			case 2:
-				noise->SetFrequency(0.01f);
-				amplitude = 1;
-				break;
+				vertex.color = glm::vec3(1.0f, 1.0f, 0.0f);
 			}
-
-			
-
-			vertex.position.y = abs(noise->GetPerlinFractal(vertex.position.x, vertex.position.z) * amplitude / (biome + 1));*/
 
 			vertices.push_back(vertex);
 		}
@@ -147,10 +134,8 @@ void Terrain::reload()
 
 	noise = new FastNoise(seed);
 
-	int amplitude = 80;
+	int amplitude = 60;
 	int count = 0;
-
-	int dimension = 300;
 
 
 	float minimum = 100;
@@ -177,11 +162,11 @@ void Terrain::reload()
 	{
 		for (int y = 0; y < dimension; y++)
 		{
-			noise->SetFrequency(0.008f);
-			noise->SetFractalOctaves(10);
+			noise->SetFrequency(0.00525f);
+			noise->SetFractalOctaves(7);
 			int biome = 0;
 			TerrainVertex vertex;
-			vertex.position = glm::vec3((x - (dimension / 2)) * 2, noise->GetPerlinFractal(x, y) * amplitude, (y - (dimension / 2)) * 2);
+			vertex.position = glm::vec3((x - (dimension / 2)), noise->GetPerlinFractal(x, y) * amplitude, (y - (dimension / 2)));
 
 			if (vertex.position.y > maximum)
 				maximum = vertex.position.y;

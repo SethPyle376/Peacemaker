@@ -29,7 +29,7 @@ Renderer::Renderer(int width, int height)
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
 	shadows = new ShadowFrameBuffer(width, height);
 	text = new Text(width, height);
