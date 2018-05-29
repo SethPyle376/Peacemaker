@@ -53,6 +53,8 @@ private:
 public:
 	SkySphere(float radius, int recursionLevel, Scene *scene);
 
+	float timeOfDay;
+
 	void render();
 
 

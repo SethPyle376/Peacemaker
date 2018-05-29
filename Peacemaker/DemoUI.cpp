@@ -26,6 +26,8 @@ void DemoUI::render()
 		scene->terrain->reload();
 	}
 
+	ImGui::SliderFloat("TimeOfDay", &(scene->sky->timeOfDay), 0.0f, 24.0f);
+
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 	ImGui::Render();

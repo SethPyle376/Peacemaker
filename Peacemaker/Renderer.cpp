@@ -51,9 +51,9 @@ void Renderer::update(Scene *scene)
 	//scene->drawShadows();
 	//shadows->unbind();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	scene->update(window, shadows->getShadowMap());
-	glPolygonMode(GL_FRONT, GL_FILL);
+	//glPolygonMode(GL_FRONT, GL_FILL);
 
 	glfwPollEvents();
 	glfwSwapBuffers(window);

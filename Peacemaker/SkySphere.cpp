@@ -3,7 +3,7 @@
 SkySphere::SkySphere(float radius, int recursionLevel, Scene *scene)
 {
 	std::cout << "STARTING SKYSPHERE INIT" << std::endl;
-	shader = new ShaderProgram("res/shaders/basicVert.glsl", "res/shaders/basicFrag.glsl");
+	shader = new ShaderProgram("res/shaders/skyboxGradientVert.glsl", "res/shaders/skyboxGradientFrag.glsl");
 	this->scene = scene;
 	this->radius = radius;
 
@@ -106,11 +106,6 @@ int SkySphere::getMiddlePoint(int p1, int p2)
 	int64_t smallerIndex = firstSmaller ? p1 : p2;
 	int64_t greaterIndex = firstSmaller ? p2 : p1;
 	int64_t key = (smallerIndex << 32) + greaterIndex;
-	
-	/*if (middlePointCache.count(key))
-	{
-		return middlePointCache[key];
-	}*/
 
 	glm::vec3 point1 = vertices[p1];
 	glm::vec3 point2 = vertices[p2];
@@ -125,10 +120,16 @@ void SkySphere::render()
 {
 	glDisable(GL_CULL_FACE);
 
+	float sunAngle = (timeOfDay / 24.0f) * (2 * glm::pi<float>());
+
+	glm::vec3 sunPosition = glm::vec3(1000.0f * glm::cos(sunAngle), 1000.0f * glm::sin(sunAngle), 0);
+
 	shader->start();
 
 	shader->loadMatrix(glGetUniformLocation(shader->getProgramID(), "projection"), scene->camera->getProjectionMatrix());
 	shader->loadMatrix(glGetUniformLocation(shader->getProgramID(), "view"), scene->camera->getViewMatrix());
+	shader->loadVector(glGetUniformLocation(shader->getProgramID(), "sunPosition"), sunPosition);
+	shader->loadFloat(glGetUniformLocation(shader->getProgramID(), "time"), timeOfDay);
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);

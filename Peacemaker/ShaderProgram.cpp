@@ -7,6 +7,7 @@ ShaderProgram::ShaderProgram(std::string vertexFile, std::string fragmentFile)
 
 void ShaderProgram::loadFloat(GLuint location, float value)
 {
+	glUniform1f(location, value);
 }
 
 void ShaderProgram::loadInt(GLuint location, GLuint value)

@@ -11,7 +11,7 @@ Scene::Scene(glm::vec2 resolution, GLFWwindow *window)
 
 	terrain = new Terrain(this, 300);
 
-	sky = new SkySphere(1, 6, this);
+	sky = new SkySphere(1000, 6, this);
 
 	controlPanel = new DemoUI(this, window);
 }
@@ -37,9 +37,13 @@ void Scene::update(GLFWwindow *window, GLuint shadowMap)
 		actors[i]->render(shadowMap);
 	}
 
+	//
 	sky->render();
+	//
 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	terrain->render();
+	glPolygonMode(GL_FRONT, GL_FILL);
 
 	controlPanel->render();
 }

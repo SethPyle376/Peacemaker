@@ -30,7 +30,7 @@ private:
 
 	DemoUI *controlPanel;
 
-	SkySphere *sky;
+	
 
 	Rectangle *rectangle;
 
@@ -51,6 +51,7 @@ public:
 	std::vector<Light*> lights;
 
 	Skybox *skybox;
+	SkySphere *sky;
 
 	Camera *camera;
 };
